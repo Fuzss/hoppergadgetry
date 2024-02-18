@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 public class GratedHopperBlockEntity extends HopperBlockEntity implements TickingBlockEntity {
     public static final Component COMPONENT_GRATED_HOPPER = Component.translatable("container.grated_hopper");
@@ -72,9 +73,15 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
     }
 
     public Container getFilterContainer() {
-        SimpleContainer container = new SimpleContainer();
-        container.items = this.filterItems;
-        container.addListener($ -> this.setChanged());
-        return container;
+        return createListBackedContainer(this.filterItems, this);
+    }
+
+    public static SimpleContainer createListBackedContainer(NonNullList<ItemStack> items, @Nullable Container listener) {
+        SimpleContainer simpleContainer = new SimpleContainer();
+        simpleContainer.items = items;
+        if (listener != null) {
+            simpleContainer.addListener($ -> listener.setChanged());
+        }
+        return simpleContainer;
     }
 }

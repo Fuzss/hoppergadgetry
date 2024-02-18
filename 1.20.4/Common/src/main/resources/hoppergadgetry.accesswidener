@@ -8,3 +8,5 @@ accessible  method  net/minecraft/world/level/block/entity/HopperBlockEntity    
 accessible  method  net/minecraft/world/level/block/entity/HopperBlockEntity    isEmptyContainer    (Lnet/minecraft/world/Container;Lnet/minecraft/core/Direction;)Z
 accessible  method  net/minecraft/world/level/block/entity/HopperBlockEntity    tryTakeInItemFromSlot   (Lnet/minecraft/world/level/block/entity/Hopper;Lnet/minecraft/world/Container;ILnet/minecraft/core/Direction;)Z
 accessible  method  net/minecraft/world/level/block/entity/HopperBlockEntity    getSlots    (Lnet/minecraft/world/Container;Lnet/minecraft/core/Direction;)Ljava/util/stream/IntStream;
+accessible  method  net/minecraft/world/level/block/entity/HopperBlockEntity    isFullContainer (Lnet/minecraft/world/Container;Lnet/minecraft/core/Direction;)Z
+accessible  field   net/minecraft/world/level/block/HopperBlock DOWN_SHAPE  Lnet/minecraft/world/phys/shapes/VoxelShape;

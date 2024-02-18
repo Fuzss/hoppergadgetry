@@ -29,7 +29,12 @@ public class GratedHopperMenu extends AbstractContainerMenu {
         for (int i = 0; i < 5; ++i) {
             this.addSlot(new Slot(container, i, 44 + 18 + i * 18, 20));
         }
-        this.addSlot(new Slot(filterContainer, 0, 44 - 18, 20));
+        this.addSlot(new Slot(filterContainer, 0, 44 - 18, 20) {
+            @Override
+            public int getMaxStackSize() {
+                return 1;
+            }
+        });
     }
 
     private void addInventorySlots(Inventory inventory, int offsetY) {

@@ -6,6 +6,7 @@ import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 
@@ -22,6 +23,7 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
                 .define('X', Items.HOPPER)
                 .pattern("#")
                 .pattern("X")
+                .group(getItemName(ModRegistry.GRATED_HOPPER_ITEM.value()))
                 .unlockedBy(getHasName(Items.HOPPER), has(Items.HOPPER))
                 .save(recipeOutput, getItemName(ModRegistry.GRATED_HOPPER_ITEM.value()) + "_from_" + getItemName(Items.HOPPER));
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModRegistry.GRATED_HOPPER_ITEM.value())
@@ -31,6 +33,7 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
                 .pattern("I#I")
                 .pattern("ICI")
                 .pattern(" I ")
+                .group(getItemName(ModRegistry.GRATED_HOPPER_ITEM.value()))
                 .unlockedBy(getHasName(Items.CHEST), has(Items.CHEST))
                 .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModRegistry.DUCT_ITEM.value())
@@ -46,6 +49,11 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
                 .pattern("#I#")
                 .pattern(" # ")
                 .unlockedBy(getHasName(Items.CHEST), has(Items.CHEST))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, ModRegistry.GRATED_HOPPER_MINECART_ITEM.value())
+                .requires(ModRegistry.GRATED_HOPPER_ITEM.value())
+                .requires(Items.MINECART)
+                .unlockedBy(getHasName(Items.MINECART), has(Items.MINECART))
                 .save(recipeOutput);
     }
 }

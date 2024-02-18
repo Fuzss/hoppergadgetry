@@ -1,9 +1,11 @@
-// 1.20.4	2024-02-17T17:06:55.464633	Recipes
+// 1.20.4	2024-02-18T11:11:22.586275	Recipes
 eebd150d5d683ccc3bbde2dc6566b5153cc77f6f data/hoppergadgetry/advancements/recipes/redstone/chute.json
 94b00f89425fe52c5258348d8a46ab52efe01d78 data/hoppergadgetry/advancements/recipes/redstone/duct.json
 dceb89a3fa4a6c57500af957d863a3dce121ff5d data/hoppergadgetry/advancements/recipes/redstone/grated_hopper.json
 701358797120a157c653d884573cdd050fd78a0b data/hoppergadgetry/advancements/recipes/redstone/grated_hopper_from_hopper.json
+94b70992daac5112adebab00323614a8b2917b40 data/hoppergadgetry/advancements/recipes/transportation/grated_hopper_minecart.json
 1ea8bd77edb9114a6e531b2d8b3e2c4cb08372ef data/hoppergadgetry/recipes/chute.json
 26a23f8b43c3818c483ca38cafbbc7bbf5ed90e1 data/hoppergadgetry/recipes/duct.json
 f1555b330797cc805ff4ac601f251427b743cbc7 data/hoppergadgetry/recipes/grated_hopper.json
 2e76ded701bf664b432db5263558203881038c62 data/hoppergadgetry/recipes/grated_hopper_from_hopper.json
+ef67678d3c9047dba8e56d381e078cf34fba8d9e data/hoppergadgetry/recipes/grated_hopper_minecart.json

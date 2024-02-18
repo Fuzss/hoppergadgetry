@@ -3,6 +3,7 @@ package fuzs.hoppergadgetry;
 import fuzs.hoppergadgetry.init.ModRegistry;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.api.core.v1.context.CreativeModeTabContext;
+import fuzs.puzzleslib.api.core.v1.context.FuelBurnTimesContext;
 import fuzs.puzzleslib.api.item.v2.CreativeModeTabConfigurator;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
@@ -26,7 +27,13 @@ public class HopperGadgetry implements ModConstructor {
                     output.accept(ModRegistry.DUCT_ITEM.value());
                     output.accept(ModRegistry.GRATED_HOPPER_ITEM.value());
                     output.accept(ModRegistry.CHUTE_ITEM.value());
+                    output.accept(ModRegistry.GRATED_HOPPER_MINECART_ITEM.value());
                 }));
+    }
+
+    @Override
+    public void onRegisterFuelBurnTimes(FuelBurnTimesContext context) {
+        context.registerFuel(300, ModRegistry.DUCT_BLOCK.value(), ModRegistry.CHUTE_BLOCK.value());
     }
 
     public static ResourceLocation id(String path) {
