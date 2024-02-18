@@ -18,11 +18,15 @@ import net.minecraft.world.level.block.Block;
 public class HopperGadgetryClient implements ClientModConstructor {
     static final ModelLayerFactory FACTORY = ModelLayerFactory.from(HopperGadgetry.MOD_ID);
     public static final ModelLayerLocation GRATED_HOPPER_MINECART = FACTORY.register("grated_hopper_minecart");
+    public static final ModelLayerLocation CHUTE_MINECART = FACTORY.register("chute_minecart");
 
     @Override
     public void onRegisterEntityRenderers(EntityRenderersContext context) {
         context.registerEntityRenderer(ModRegistry.GRATED_HOPPER_MINECART_ENTITY_TYPE.value(),
                 context1 -> new MinecartRenderer<>(context1, GRATED_HOPPER_MINECART)
+        );
+        context.registerEntityRenderer(ModRegistry.CHUTE_MINECART_ENTITY_TYPE.value(),
+                context1 -> new MinecartRenderer<>(context1, CHUTE_MINECART)
         );
     }
 
@@ -41,6 +45,7 @@ public class HopperGadgetryClient implements ClientModConstructor {
     @Override
     public void onRegisterLayerDefinitions(LayerDefinitionsContext context) {
         context.registerLayerDefinition(GRATED_HOPPER_MINECART, MinecartModel::createBodyLayer);
+        context.registerLayerDefinition(CHUTE_MINECART, MinecartModel::createBodyLayer);
     }
 
     @Override

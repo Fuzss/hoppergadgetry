@@ -14,6 +14,7 @@ public class HopperLikeScreen<T extends AbstractContainerMenu> extends AbstractC
     public static final ResourceLocation DUCT_LOCATION = HopperGadgetry.id("textures/gui/container/duct.png");
     public static final int GRATED_HOPPER_IMAGE_HEIGHT = 164;
     public static final int DUCT_IMAGE_HEIGHT = 133;
+
     private final ResourceLocation resourceLocation;
 
     public HopperLikeScreen(ResourceLocation resourceLocation, int imageHeight, T menu, Inventory playerInventory, Component title) {

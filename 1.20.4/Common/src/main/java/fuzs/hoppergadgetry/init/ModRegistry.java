@@ -2,6 +2,7 @@ package fuzs.hoppergadgetry.init;
 
 import fuzs.extensibleenums.api.v2.CommonAbstractions;
 import fuzs.hoppergadgetry.HopperGadgetry;
+import fuzs.hoppergadgetry.world.entity.vehicle.MinecartChute;
 import fuzs.hoppergadgetry.world.entity.vehicle.MinecartGratedHopper;
 import fuzs.hoppergadgetry.world.inventory.DuctMenu;
 import fuzs.hoppergadgetry.world.inventory.GratedHopperMenu;
@@ -32,6 +33,7 @@ import net.minecraft.world.level.material.MapColor;
 
 public class ModRegistry {
     public static final AbstractMinecart.Type GRATED_HOPPER_MINECART_TYPE = CommonAbstractions.createMinecartType(HopperGadgetry.id("grated_hopper"));
+    public static final AbstractMinecart.Type CHUTE_MINECART_TYPE = CommonAbstractions.createMinecartType(HopperGadgetry.id("chute"));
 
     static final RegistryManager REGISTRY = RegistryManager.from(HopperGadgetry.MOD_ID);
     public static final Holder.Reference<Block> CHUTE_BLOCK = REGISTRY.registerBlock("chute",
@@ -59,6 +61,7 @@ public class ModRegistry {
     );
     public static final Holder.Reference<Item> GRATED_HOPPER_ITEM = REGISTRY.registerBlockItem(GRATED_HOPPER_BLOCK);
     public static final Holder.Reference<Item> GRATED_HOPPER_MINECART_ITEM = REGISTRY.registerItem("grated_hopper_minecart", () -> new MinecartItem(GRATED_HOPPER_MINECART_TYPE, new Item.Properties().stacksTo(1)));
+    public static final Holder.Reference<Item> CHUTE_MINECART_ITEM = REGISTRY.registerItem("chute_minecart", () -> new MinecartItem(CHUTE_MINECART_TYPE, new Item.Properties().stacksTo(1)));
     public static final Holder.Reference<BlockEntityType<GratedHopperBlockEntity>> GRATED_HOPPER_BLOCK_ENTITY_TYPE = REGISTRY.registerBlockEntityType(
             "grated_hopper",
             () -> BlockEntityType.Builder.of(GratedHopperBlockEntity::new, GRATED_HOPPER_BLOCK.value())
@@ -77,6 +80,12 @@ public class ModRegistry {
                     .sized(0.98F, 0.7F)
                     .clientTrackingRange(8)
     );
+    public static final Holder.Reference<EntityType<MinecartChute>> CHUTE_MINECART_ENTITY_TYPE = REGISTRY.registerEntityType(
+            "chute_minecart",
+            () -> EntityType.Builder.<MinecartChute>of(MinecartChute::new, MobCategory.MISC)
+                    .sized(0.98F, 0.7F)
+                    .clientTrackingRange(8)
+    );
     public static final Holder.Reference<MenuType<GratedHopperMenu>> GRATED_HOPPER_MENU_TYPE = REGISTRY.registerMenuType(
             "grated_hopper",
             () -> GratedHopperMenu::new
@@ -91,5 +100,6 @@ public class ModRegistry {
 
     public static void touch() {
         MinecartTypeRegistry.INSTANCE.register(GRATED_HOPPER_MINECART_TYPE, MinecartGratedHopper::new);
+        MinecartTypeRegistry.INSTANCE.register(CHUTE_MINECART_TYPE, MinecartChute::new);
     }
 }

@@ -10,19 +10,14 @@ import net.minecraft.data.models.blockstates.Condition;
 import net.minecraft.data.models.blockstates.MultiPartGenerator;
 import net.minecraft.data.models.blockstates.Variant;
 import net.minecraft.data.models.blockstates.VariantProperties;
-import net.minecraft.data.models.model.*;
+import net.minecraft.data.models.model.ModelLocationUtils;
+import net.minecraft.data.models.model.ModelTemplates;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class ModModelProvider extends AbstractModelProvider {
-    public static final ModelTemplate HOPPER = ModelTemplates.create("hopper",
-            TextureSlot.PARTICLE,
-            TextureSlot.TOP,
-            TextureSlot.SIDE,
-            TextureSlot.INSIDE
-    );
 
     public ModModelProvider(DataProviderContext context) {
         super(context);
@@ -36,9 +31,8 @@ public class ModModelProvider extends AbstractModelProvider {
     }
 
     private static void createChuteBlock(BlockModelGenerators builder, Block block) {
-        TextureMapping textureMapping = chuteTextureMapping(Blocks.STRIPPED_OAK_LOG);
         builder.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block,
-                HOPPER.create(block, textureMapping, builder.modelOutput)
+                ModelLocationUtils.getModelLocation(block)
         ));
     }
 
@@ -93,20 +87,12 @@ public class ModModelProvider extends AbstractModelProvider {
                 ));
     }
 
-    private static TextureMapping chuteTextureMapping(Block strippedWoodBlock) {
-        return new TextureMapping().put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(strippedWoodBlock)).put(
-                TextureSlot.TOP,
-                TextureMapping.getBlockTexture(strippedWoodBlock, "_top")
-        ).put(TextureSlot.SIDE, TextureMapping.getBlockTexture(strippedWoodBlock)).put(TextureSlot.INSIDE,
-                TextureMapping.getBlockTexture(strippedWoodBlock, "_top")
-        );
-    }
-
     @Override
     public void addItemModels(ItemModelGenerators builder) {
         builder.generateFlatItem(ModRegistry.GRATED_HOPPER_ITEM.value(), ModelTemplates.FLAT_ITEM);
         builder.generateFlatItem(ModRegistry.CHUTE_ITEM.value(), ModelTemplates.FLAT_ITEM);
         builder.generateFlatItem(ModRegistry.DUCT_ITEM.value(), ModelTemplates.FLAT_ITEM);
         builder.generateFlatItem(ModRegistry.GRATED_HOPPER_MINECART_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        builder.generateFlatItem(ModRegistry.CHUTE_MINECART_ITEM.value(), ModelTemplates.FLAT_ITEM);
     }
 }

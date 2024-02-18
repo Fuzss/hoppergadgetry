@@ -22,6 +22,8 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         builder.add(ModRegistry.GRATED_HOPPER_BLOCK.value(), "Grated Hopper");
         builder.add(ModRegistry.GRATED_HOPPER_MINECART_ITEM.value(), "Grated Hopper Minecart");
         builder.add(ModRegistry.GRATED_HOPPER_MINECART_ENTITY_TYPE.value(), "Minecart with Grated Hopper");
+        builder.add(ModRegistry.CHUTE_MINECART_ITEM.value(), "Chute Minecart");
+        builder.add(ModRegistry.CHUTE_MINECART_ENTITY_TYPE.value(), "Minecart with Chute");
         builder.add(GratedHopperBlockEntity.COMPONENT_GRATED_HOPPER, "Grated Hopper");
         builder.add(ChuteBlockEntity.COMPONENT_CHUTE, "Item Chute");
         builder.add(DuctBlockEntity.COMPONENT_DUCT, "Item Duct");

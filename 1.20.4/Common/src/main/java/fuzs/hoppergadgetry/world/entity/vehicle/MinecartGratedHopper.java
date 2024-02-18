@@ -13,6 +13,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.vehicle.MinecartHopper;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
@@ -86,6 +87,11 @@ public class MinecartGratedHopper extends MinecartHopper {
                 playerInventory,
                 this, ContainerMenuHelper.createListBackedContainer(this.filterItems, this)
         );
+    }
+
+    @Override
+    protected Item getDropItem() {
+        return ModRegistry.GRATED_HOPPER_MINECART_ITEM.value();
     }
 
     @Override

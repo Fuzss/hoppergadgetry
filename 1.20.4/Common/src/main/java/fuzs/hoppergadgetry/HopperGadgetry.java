@@ -28,6 +28,7 @@ public class HopperGadgetry implements ModConstructor {
                     output.accept(ModRegistry.GRATED_HOPPER_ITEM.value());
                     output.accept(ModRegistry.CHUTE_ITEM.value());
                     output.accept(ModRegistry.GRATED_HOPPER_MINECART_ITEM.value());
+                    output.accept(ModRegistry.CHUTE_MINECART_ITEM.value());
                 }));
     }
 

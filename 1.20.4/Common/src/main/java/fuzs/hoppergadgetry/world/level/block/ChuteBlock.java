@@ -13,7 +13,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HopperBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.Hopper;
@@ -22,12 +21,17 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class ChuteBlock extends BaseEntityBlock implements TickingEntityBlock<ChuteBlockEntity> {
     public static final MapCodec<ChuteBlock> CODEC = simpleCodec(ChuteBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.FACING_HOPPER;
+    public static final VoxelShape TOP = Block.box(0.0, 10.0, 0.0, 16.0, 16.0, 16.0);
+    public static final VoxelShape FUNNEL = Block.box(4.0, 0.0, 4.0, 12.0, 10.0, 12.0);
+    public static final VoxelShape SHAPE = Shapes.join(Shapes.or(FUNNEL, TOP), Hopper.INSIDE, BooleanOp.ONLY_FIRST);
 
     public ChuteBlock(Properties properties) {
         super(properties);
@@ -51,7 +55,7 @@ public class ChuteBlock extends BaseEntityBlock implements TickingEntityBlock<Ch
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return HopperBlock.DOWN_SHAPE;
+        return SHAPE;
     }
 
     @Override

@@ -44,6 +44,8 @@ public class ChuteBlockEntity extends HopperBlockEntity implements TickingBlockE
 
     @Override
     protected NonNullList<ItemStack> getItems() {
+        // do some wacky stuff so this cannot hold any items
+        // main purpose is to still extend hopper to be compatible with all the cooldown shenanigans some mods might be doing
         return NonNullList.create();
     }
 
@@ -62,19 +64,19 @@ public class ChuteBlockEntity extends HopperBlockEntity implements TickingBlockE
         pushItemsTick(this.getLevel(), this.getBlockPos(), this.getBlockState(), this);
     }
 
-    public static void pushItemsTick(Level level, BlockPos pos, BlockState state, HopperBlockEntity blockEntity) {
+    public static void pushItemsTick(Level level, BlockPos blockPos, BlockState blockState, HopperBlockEntity blockEntity) {
         --blockEntity.cooldownTime;
         blockEntity.tickedGameTime = level.getGameTime();
         if (!blockEntity.isOnCooldown()) {
-            if (suckInItems(level, pos, state, blockEntity)) {
+            Container container = getAttachedContainerWithSpace(level, blockPos, blockState.getValue(ChuteBlock.FACING));
+            if (suckInItems(level, blockEntity, container)) {
                 blockEntity.setCooldown(8);
                 blockEntity.setChanged();
             }
         }
     }
 
-    public static boolean suckInItems(Level level, BlockPos blockPos, BlockState blockState, Hopper hopper) {
-        Container container = getAttachedContainerWithSpace(level, blockPos, blockState.getValue(ChuteBlock.FACING));
+    public static boolean suckInItems(Level level, Hopper hopper, @Nullable Container container) {
         if (container != null) {
             for (ItemEntity itemEntity : getItemsAtAndAbove(level, hopper)) {
                 if (addItem(container, itemEntity)) {

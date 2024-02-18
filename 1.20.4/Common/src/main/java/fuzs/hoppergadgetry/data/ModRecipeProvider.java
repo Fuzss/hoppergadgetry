@@ -7,6 +7,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 
@@ -44,14 +45,19 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
                 .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModRegistry.CHUTE_ITEM.value())
                 .define('#', ItemTags.PLANKS)
-                .define('I', Items.CHEST)
+                .define('X', ItemTags.LOGS)
                 .pattern("# #")
-                .pattern("#I#")
+                .pattern("#X#")
                 .pattern(" # ")
                 .unlockedBy(getHasName(Items.CHEST), has(Items.CHEST))
                 .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, ModRegistry.GRATED_HOPPER_MINECART_ITEM.value())
                 .requires(ModRegistry.GRATED_HOPPER_ITEM.value())
+                .requires(Items.MINECART)
+                .unlockedBy(getHasName(Items.MINECART), has(Items.MINECART))
+                .save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, ModRegistry.CHUTE_MINECART_ITEM.value())
+                .requires(ModRegistry.CHUTE_ITEM.value())
                 .requires(Items.MINECART)
                 .unlockedBy(getHasName(Items.MINECART), has(Items.MINECART))
                 .save(recipeOutput);

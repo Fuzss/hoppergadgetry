@@ -37,7 +37,6 @@ import java.util.Map;
 
 public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<DuctBlockEntity> {
     public static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = PipeBlock.PROPERTY_BY_DIRECTION;
-    public static final MapCodec<DuctBlock> CODEC = simpleCodec(DuctBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
@@ -46,76 +45,27 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     public static final BooleanProperty WEST = BlockStateProperties.WEST;
     public static final BooleanProperty UP = BlockStateProperties.UP;
     public static final BooleanProperty DOWN = BlockStateProperties.DOWN;
+    public static final MapCodec<DuctBlock> CODEC = simpleCodec(DuctBlock::new);
     private static final VoxelShape SHAPE = Block.box(4.0, 4.0, 4.0, 12.0, 12.0, 12.0);
     private static final VoxelShape OUTPUT_SHAPE = Block.box(6.0, 12.0, 6.0, 10.0, 16.0, 10.0);
     private static final VoxelShape INPUT_SHAPE = Block.box(5.0, 12.0, 5.0, 11.0, 16.0, 11.0);
     private static final Map<Direction, VoxelShape> DIRECTIONAL_OUTPUT_SHAPES = ShapesHelper.rotate(OUTPUT_SHAPE);
     private static final Map<Direction, VoxelShape> DIRECTIONAL_INPUT_SHAPES = ShapesHelper.rotate(INPUT_SHAPE);
     private static final VoxelShape[] SHAPES = makeVoxelShapes();
-    private static final Property<?>[] FACING_PROPERTIES = new Property[]{BlockStateProperties.FACING_HOPPER, BlockStateProperties.FACING, BlockStateProperties.HORIZONTAL_FACING};
+    private static final Property<?>[] FACING_PROPERTIES = new Property[]{
+            // order matters, check hopper facing first
+            BlockStateProperties.FACING_HOPPER,
+            BlockStateProperties.FACING,
+            BlockStateProperties.HORIZONTAL_FACING
+    };
 
     public DuctBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any()
-                .setValue(FACING, Direction.DOWN)
-                .setValue(ENABLED,
-                        Boolean.valueOf(true)
-                )
-                .setValue(NORTH, Boolean.valueOf(false))
-                .setValue(EAST, Boolean.valueOf(false))
-                .setValue(SOUTH,
-                        Boolean.valueOf(false)
-                )
-                .setValue(WEST, Boolean.valueOf(false))
-                .setValue(UP, Boolean.valueOf(false))
-                .setValue(DOWN, Boolean.valueOf(false)));
-    }
-
-    private static VoxelShape[] makeVoxelShapes() {
-        VoxelShape[] voxelShapes = new VoxelShape[4096];
-        voxelShapes[0] = SHAPE;
-
-        for (int i = 0; i < voxelShapes.length; i++) {
-
-            int x = i >> PROPERTY_BY_DIRECTION.size();
-            // don't generate shapes that will never be used
-            // https://stackoverflow.com/questions/600293/how-to-check-if-a-number-is-a-power-of-2
-            if (x != 0 && (x & (x - 1)) == 0) {
-                for (Direction outputDirection : PROPERTY_BY_DIRECTION.keySet()) {
-
-                    if (x == 1 << outputDirection.get3DDataValue()) {
-
-                        VoxelShape voxelShape = Shapes.or(SHAPE, DIRECTIONAL_OUTPUT_SHAPES.get(outputDirection));
-                        for (Direction inputDirection : PROPERTY_BY_DIRECTION.keySet()) {
-
-                            if ((i & 1 << inputDirection.get3DDataValue()) != 0) {
-
-                                voxelShape = Shapes.or(voxelShape, DIRECTIONAL_INPUT_SHAPES.get(inputDirection));
-                            }
-                        }
-
-                        voxelShapes[i] = voxelShape;
-                        break;
-                    }
-                }
-            }
-        }
-
-        return voxelShapes;
-    }
-
-    protected int getAABBIndex(BlockState blockState) {
-        int index = 0;
-
-        for (Map.Entry<Direction, BooleanProperty> entry : PROPERTY_BY_DIRECTION.entrySet()) {
-            if (blockState.getValue(entry.getValue())) {
-                index |= 1 << entry.getKey().get3DDataValue();
-            }
-        }
-
-        index |= 1 << (blockState.getValue(FACING).get3DDataValue() + PROPERTY_BY_DIRECTION.size());
-
-        return index;
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.DOWN).setValue(ENABLED,
+                Boolean.TRUE
+        ).setValue(NORTH, Boolean.FALSE).setValue(EAST, Boolean.FALSE).setValue(SOUTH, Boolean.FALSE).setValue(WEST,
+                Boolean.FALSE
+        ).setValue(UP, Boolean.FALSE).setValue(DOWN, Boolean.FALSE));
     }
 
     @Override
@@ -139,6 +89,14 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     }
 
     @Override
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        BlockState blockState = super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+        return blockState.setValue(PROPERTY_BY_DIRECTION.get(direction),
+                this.canConnect(neighborState, direction.getOpposite())
+        );
+    }
+
+    @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
         this.checkPoweredState(level, pos, state);
     }
@@ -147,13 +105,6 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         if (!oldState.is(state.getBlock())) {
             this.checkPoweredState(level, pos, state);
-        }
-    }
-
-    private void checkPoweredState(Level level, BlockPos pos, BlockState state) {
-        boolean bl = !level.hasNeighborSignal(pos);
-        if (bl != state.getValue(ENABLED)) {
-            level.setBlock(pos, state.setValue(ENABLED, Boolean.valueOf(bl)), 2);
         }
     }
 
@@ -202,6 +153,27 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
         return voxelShape != null ? voxelShape : super.getShape(state, level, pos, context);
     }
 
+    protected int getAABBIndex(BlockState blockState) {
+        int index = 0;
+
+        for (Map.Entry<Direction, BooleanProperty> entry : PROPERTY_BY_DIRECTION.entrySet()) {
+            if (blockState.getValue(entry.getValue())) {
+                index |= 1 << entry.getKey().get3DDataValue();
+            }
+        }
+
+        index |= 1 << (blockState.getValue(FACING).get3DDataValue() + PROPERTY_BY_DIRECTION.size());
+
+        return index;
+    }
+
+    private void checkPoweredState(Level level, BlockPos pos, BlockState state) {
+        boolean bl = !level.hasNeighborSignal(pos);
+        if (bl != state.getValue(ENABLED)) {
+            level.setBlock(pos, state.setValue(ENABLED, bl), 2);
+        }
+    }
+
     @Override
     public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
         return false;
@@ -210,13 +182,12 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction direction = context.getClickedFace().getOpposite();
-        BlockState blockState = this.defaultBlockState().setValue(FACING, direction).setValue(ENABLED,
-                Boolean.valueOf(true)
-        );
+        BlockState blockState = this.defaultBlockState().setValue(FACING, direction).setValue(ENABLED, Boolean.TRUE);
         for (Map.Entry<Direction, BooleanProperty> entry : PROPERTY_BY_DIRECTION.entrySet()) {
-            BlockState neighborBlockState = context.getLevel().getBlockState(context.getClickedPos().relative(entry.getKey()));
+            BlockState neighborBlockState = context.getLevel().getBlockState(context.getClickedPos()
+                    .relative(entry.getKey()));
             if (this.canConnect(neighborBlockState, entry.getKey().getOpposite())) {
-                blockState = blockState.setValue(entry.getValue(), Boolean.valueOf(true));
+                blockState = blockState.setValue(entry.getValue(), Boolean.TRUE);
             }
         }
         return blockState;
@@ -235,12 +206,6 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        BlockState blockState = super.updateShape(state, direction, neighborState, level, pos, neighborPos);
-        return blockState.setValue(PROPERTY_BY_DIRECTION.get(direction), this.canConnect(neighborState, direction.getOpposite()));
-    }
-
-    @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         if (stack.hasCustomHoverName()) {
             if (level.getBlockEntity(pos) instanceof HopperBlockEntity blockEntity) {
@@ -252,5 +217,38 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, ENABLED, NORTH, EAST, SOUTH, WEST, UP, DOWN);
+    }
+
+    private static VoxelShape[] makeVoxelShapes() {
+        VoxelShape[] voxelShapes = new VoxelShape[4096];
+        voxelShapes[0] = SHAPE;
+
+        for (int i = 0; i < voxelShapes.length; i++) {
+
+            int x = i >> PROPERTY_BY_DIRECTION.size();
+            // don't generate shapes that will never be used
+            // https://stackoverflow.com/questions/600293/how-to-check-if-a-number-is-a-power-of-2
+            if (x != 0 && (x & (x - 1)) == 0) {
+                for (Direction outputDirection : PROPERTY_BY_DIRECTION.keySet()) {
+
+                    if (x == 1 << outputDirection.get3DDataValue()) {
+
+                        VoxelShape voxelShape = Shapes.or(SHAPE, DIRECTIONAL_OUTPUT_SHAPES.get(outputDirection));
+                        for (Direction inputDirection : PROPERTY_BY_DIRECTION.keySet()) {
+
+                            if ((i & 1 << inputDirection.get3DDataValue()) != 0) {
+
+                                voxelShape = Shapes.or(voxelShape, DIRECTIONAL_INPUT_SHAPES.get(inputDirection));
+                            }
+                        }
+
+                        voxelShapes[i] = voxelShape;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return voxelShapes;
     }
 }
