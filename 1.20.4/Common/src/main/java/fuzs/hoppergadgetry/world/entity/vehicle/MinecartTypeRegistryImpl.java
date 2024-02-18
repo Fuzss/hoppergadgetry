@@ -3,11 +3,13 @@ package fuzs.hoppergadgetry.world.entity.vehicle;
 import com.google.common.collect.Maps;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+@Deprecated(forRemoval = true)
 public final class MinecartTypeRegistryImpl implements MinecartTypeRegistry {
     private static final Map<AbstractMinecart.Type, Factory> MINECART_FACTORIES = Maps.newEnumMap(AbstractMinecart.Type.class);
 
@@ -18,9 +20,9 @@ public final class MinecartTypeRegistryImpl implements MinecartTypeRegistry {
         MINECART_FACTORIES.put(type, factory);
     }
 
-    public static Optional<AbstractMinecart> createMinecartForType(AbstractMinecart.Type type, Level level, double x, double y, double z) {
-        Objects.requireNonNull(type, "type is null");
-        if (MINECART_FACTORIES.containsKey(type)) {
+    public static Optional<AbstractMinecart> createMinecartForType(@Nullable AbstractMinecart.Type type, Level level, double x, double y, double z) {
+        // be careful with type, custom minecarts from other mods might do things differently from us without creating a custom type
+        if (type != null && MINECART_FACTORIES.containsKey(type)) {
             return Optional.of(MINECART_FACTORIES.get(type)).map(factory -> factory.create(level, x, y, z));
         } else {
             return Optional.empty();

@@ -1,6 +1,7 @@
 package fuzs.hoppergadgetry.world.level.block.entity;
 
 import fuzs.hoppergadgetry.init.ModRegistry;
+import fuzs.hoppergadgetry.world.level.block.ChuteBlock;
 import fuzs.puzzleslib.api.block.v1.entity.TickingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -58,18 +59,22 @@ public class ChuteBlockEntity extends HopperBlockEntity implements TickingBlockE
 
     @Override
     public void serverTick() {
-        --this.cooldownTime;
-        this.tickedGameTime = this.getLevel().getGameTime();
-        if (!this.isOnCooldown()) {
-            if (suckInItems(this.getLevel(), this, this.getBlockPos())) {
-                this.setCooldown(8);
-                this.setChanged();
+        pushItemsTick(this.getLevel(), this.getBlockPos(), this.getBlockState(), this);
+    }
+
+    public static void pushItemsTick(Level level, BlockPos pos, BlockState state, HopperBlockEntity blockEntity) {
+        --blockEntity.cooldownTime;
+        blockEntity.tickedGameTime = level.getGameTime();
+        if (!blockEntity.isOnCooldown()) {
+            if (suckInItems(level, pos, state, blockEntity)) {
+                blockEntity.setCooldown(8);
+                blockEntity.setChanged();
             }
         }
     }
 
-    public static boolean suckInItems(Level level, Hopper hopper, BlockPos blockPos) {
-        Container container = getAttachedContainerWithSpace(level, blockPos, Direction.DOWN);
+    public static boolean suckInItems(Level level, BlockPos blockPos, BlockState blockState, Hopper hopper) {
+        Container container = getAttachedContainerWithSpace(level, blockPos, blockState.getValue(ChuteBlock.FACING));
         if (container != null) {
             for (ItemEntity itemEntity : getItemsAtAndAbove(level, hopper)) {
                 if (addItem(container, itemEntity)) {
@@ -115,11 +120,11 @@ public class ChuteBlockEntity extends HopperBlockEntity implements TickingBlockE
         // NO-OP
     }
 
-    public static void entityInside(Level level, BlockPos pos, BlockState state, Entity entity, HopperBlockEntity blockEntity) {
+    public static void entityInside(Level level, BlockPos blockPos, BlockState blockState, Entity entity, HopperBlockEntity blockEntity) {
         if (entity instanceof ItemEntity itemEntity && !itemEntity.getItem().isEmpty()) {
-            Container container = getAttachedContainerWithSpace(level, pos, Direction.DOWN);
+            Container container = getAttachedContainerWithSpace(level, blockPos, blockState.getValue(ChuteBlock.FACING));
             if (container != null && Shapes.joinIsNotEmpty(Shapes.create(entity.getBoundingBox()
-                    .move(-pos.getX(), -pos.getY(), -pos.getZ())), blockEntity.getSuckShape(), BooleanOp.AND)) {
+                    .move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ())), blockEntity.getSuckShape(), BooleanOp.AND)) {
                 addItem(container, itemEntity);
             }
         }

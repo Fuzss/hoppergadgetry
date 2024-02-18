@@ -9,36 +9,28 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class GratedHopperMenu extends AbstractContainerMenu {
-    public static final int CONTAINER_SIZE = 5;
-    public static final int FILTER_CONTAINER_SIZE = 1;
+public class DuctMenu extends AbstractContainerMenu {
+    public static final int CONTAINER_SIZE = 1;
 
-    private final Container hopper;
+    private final Container container;
 
-    public GratedHopperMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, new SimpleContainer(CONTAINER_SIZE), new SimpleContainer(FILTER_CONTAINER_SIZE));
+    public DuctMenu(int containerId, Inventory playerInventory) {
+        this(containerId, playerInventory, new SimpleContainer(1));
     }
 
-    public GratedHopperMenu(int containerId, Inventory inventory, Container container, Container filterContainer) {
-        super(ModRegistry.GRATED_HOPPER_MENU_TYPE.value(), containerId);
-        this.hopper = container;
+    public DuctMenu(int containerId, Inventory inventory, Container container) {
+        super(ModRegistry.DUCT_MENU_TYPE.value(), containerId);
+        this.container = container;
         checkContainerSize(container, CONTAINER_SIZE);
-        checkContainerSize(filterContainer, FILTER_CONTAINER_SIZE);
         container.startOpen(inventory.player);
-        this.addContainerSlots(container, filterContainer);
+        this.addContainerSlots(container);
         this.addInventorySlots(inventory, 51);
     }
 
-    private void addContainerSlots(Container container, Container filterContainer) {
+    private void addContainerSlots(Container container) {
         for (int i = 0; i < container.getContainerSize(); ++i) {
-            this.addSlot(new Slot(container, i, 44 + 18 + i * 18, 20));
+            this.addSlot(new Slot(container, i, 89 - container.getContainerSize() * 18 / 2 + i * 18, 20));
         }
-        this.addSlot(new Slot(filterContainer, 0, 44 - 18, 20) {
-            @Override
-            public int getMaxStackSize() {
-                return 1;
-            }
-        });
     }
 
     private void addInventorySlots(Inventory inventory, int offsetY) {
@@ -59,15 +51,11 @@ public class GratedHopperMenu extends AbstractContainerMenu {
         if (slot != null && slot.hasItem()) {
             ItemStack itemStack2 = slot.getItem();
             itemStack = itemStack2.copy();
-            if (index < CONTAINER_SIZE) {
-                if (!this.moveItemStackTo(itemStack2, CONTAINER_SIZE + FILTER_CONTAINER_SIZE, this.slots.size(), true)) {
+            if (index < this.container.getContainerSize()) {
+                if (!this.moveItemStackTo(itemStack2, this.container.getContainerSize(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index < CONTAINER_SIZE + FILTER_CONTAINER_SIZE) {
-                if (!this.moveItemStackTo(itemStack2, CONTAINER_SIZE + FILTER_CONTAINER_SIZE, this.slots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.moveItemStackTo(itemStack2, 0, CONTAINER_SIZE, false)) {
+            } else if (!this.moveItemStackTo(itemStack2, 0, this.container.getContainerSize(), false)) {
                 return ItemStack.EMPTY;
             }
 
@@ -84,11 +72,11 @@ public class GratedHopperMenu extends AbstractContainerMenu {
     @Override
     public void removed(Player player) {
         super.removed(player);
-        this.hopper.stopOpen(player);
+        this.container.stopOpen(player);
     }
 
     @Override
     public boolean stillValid(Player player) {
-        return this.hopper.stillValid(player);
+        return this.container.stillValid(player);
     }
 }

@@ -4,6 +4,7 @@ import fuzs.extensibleenums.api.v2.CommonAbstractions;
 import fuzs.hoppergadgetry.HopperGadgetry;
 import fuzs.hoppergadgetry.world.entity.vehicle.MinecartGratedHopper;
 import fuzs.hoppergadgetry.world.entity.vehicle.MinecartTypeRegistry;
+import fuzs.hoppergadgetry.world.inventory.DuctMenu;
 import fuzs.hoppergadgetry.world.inventory.GratedHopperMenu;
 import fuzs.hoppergadgetry.world.level.block.ChuteBlock;
 import fuzs.hoppergadgetry.world.level.block.DuctBlock;
@@ -12,7 +13,9 @@ import fuzs.hoppergadgetry.world.level.block.entity.ChuteBlockEntity;
 import fuzs.hoppergadgetry.world.level.block.entity.DuctBlockEntity;
 import fuzs.hoppergadgetry.world.level.block.entity.GratedHopperBlockEntity;
 import fuzs.puzzleslib.api.init.v3.registry.RegistryManager;
+import fuzs.puzzleslib.api.init.v3.tags.BoundTagFactory;
 import net.minecraft.core.Holder;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
@@ -78,6 +81,13 @@ public class ModRegistry {
             "grated_hopper",
             () -> GratedHopperMenu::new
     );
+    public static final Holder.Reference<MenuType<DuctMenu>> DUCT_MENU_TYPE = REGISTRY.registerMenuType(
+            "duct",
+            () -> DuctMenu::new
+    );
+
+    static final BoundTagFactory TAGS = BoundTagFactory.make(HopperGadgetry.MOD_ID);
+    public static final TagKey<Block> DUCT_INPUTS_BLOCK_TAG = TAGS.registerBlockTag("duct_inputs");
 
     public static void touch() {
         MinecartTypeRegistry.INSTANCE.register(GRATED_HOPPER_MINECART_TYPE, MinecartGratedHopper::new);

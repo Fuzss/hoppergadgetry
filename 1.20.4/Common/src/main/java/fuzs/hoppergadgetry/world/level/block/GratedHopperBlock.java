@@ -58,7 +58,7 @@ public class GratedHopperBlock extends HopperBlock implements TickingEntityBlock
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (level.getBlockEntity(pos) instanceof GratedHopperBlockEntity blockEntity) {
-            blockEntity.getBehavior().entityInside(level, pos, state, entity, blockEntity);
+            GratedHopperBlockEntity.entityInside(level, pos, state, entity, blockEntity);
         }
     }
 }
