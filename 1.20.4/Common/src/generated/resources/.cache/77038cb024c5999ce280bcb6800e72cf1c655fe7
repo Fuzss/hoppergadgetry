@@ -1,8 +1,8 @@
-// 1.20.4	2024-02-18T12:29:24.518763	Model Definitions
+// 1.20.4	2024-02-18T17:19:16.407159	Model Definitions
 82e3194899db91e5dfba68b6e5f07931e1332d07 assets/hoppergadgetry/blockstates/chute.json
 54b3f8ad1baaa3c15e123db95ccaac23c9a649b4 assets/hoppergadgetry/blockstates/grated_hopper.json
 478729d2753ef079675735e6a64f30f95e3099c6 assets/hoppergadgetry/models/block/chute.json
-f10456f91c40c241a71d37d9312ad00a64ec9051 assets/hoppergadgetry/models/item/chute.json
-f10456f91c40c241a71d37d9312ad00a64ec9051 assets/hoppergadgetry/models/item/duct.json
-f10456f91c40c241a71d37d9312ad00a64ec9051 assets/hoppergadgetry/models/item/grated_hopper.json
-3c904ed241691ca4ec5229d9a414f7bd0bc65e38 assets/hoppergadgetry/models/item/grated_hopper_minecart.json
+a99ecc3e8c6e476ccd116fce3588a9db0f5ab985 assets/hoppergadgetry/models/item/chute.json
+26ad6fae50bb7f69687f4a715583c71fe59f926d assets/hoppergadgetry/models/item/duct.json
+7cba647a672fb0e7ff12e2be19e8bf22c1e0fdef assets/hoppergadgetry/models/item/grated_hopper.json
+e278a10a2223e67c6e646e672471cc0af042a186 assets/hoppergadgetry/models/item/grated_hopper_minecart.json

@@ -2,9 +2,10 @@
   "block.hoppergadgetry.chute": "Chute",
   "block.hoppergadgetry.duct": "Duct",
   "block.hoppergadgetry.grated_hopper": "Grated Hopper",
-  "container.chute": "Chute",
+  "container.chute": "Item Chute",
+  "container.duct": "Item Duct",
   "container.grated_hopper": "Grated Hopper",
-  "entity.hoppergadgetry.grated_hopper_minecart": "Grated Hopper Minecart",
+  "entity.hoppergadgetry.grated_hopper_minecart": "Minecart with Grated Hopper",
   "item.hoppergadgetry.grated_hopper_minecart": "Grated Hopper Minecart",
   "itemGroup.hoppergadgetry.main": "Hopper Gadgetry"
 }

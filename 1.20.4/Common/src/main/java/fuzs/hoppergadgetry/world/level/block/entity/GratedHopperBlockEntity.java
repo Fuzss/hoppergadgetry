@@ -4,6 +4,7 @@ import fuzs.hoppergadgetry.HopperGadgetry;
 import fuzs.hoppergadgetry.init.ModRegistry;
 import fuzs.hoppergadgetry.world.inventory.GratedHopperMenu;
 import fuzs.puzzleslib.api.block.v1.entity.TickingBlockEntity;
+import fuzs.puzzleslib.api.container.v1.ContainerMenuHelper;
 import fuzs.puzzleslib.api.container.v1.ContainerSerializationHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,7 +12,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -24,13 +24,12 @@ import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
-import org.jetbrains.annotations.Nullable;
 
 public class GratedHopperBlockEntity extends HopperBlockEntity implements TickingBlockEntity {
     public static final Component COMPONENT_GRATED_HOPPER = Component.translatable("container.grated_hopper");
     public static final String TAG_FILTER = HopperGadgetry.id("filter").toString();
 
-    private final NonNullList<ItemStack> filterItems = NonNullList.withSize(1, ItemStack.EMPTY);
+    private final NonNullList<ItemStack> filterItems = NonNullList.withSize(GratedHopperMenu.FILTER_CONTAINER_SIZE, ItemStack.EMPTY);
 
     public GratedHopperBlockEntity(BlockPos pos, BlockState blockState) {
         super(pos, blockState);
@@ -66,7 +65,18 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return this.filterItems.get(0).isEmpty() || ItemStack.isSameItemSameTags(this.filterItems.get(0), stack);
+        boolean isEmpty = true;
+        for (ItemStack filter : this.filterItems) {
+            if (!filter.isEmpty()) {
+                if (ItemStack.isSameItemSameTags(filter, stack)) {
+                    return true;
+                } else {
+                    isEmpty = false;
+                }
+            }
+        }
+
+        return isEmpty;
     }
 
     @Override
@@ -112,17 +122,7 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
     }
 
     public Container getFilterContainer() {
-        return createListBackedContainer(this.filterItems, this);
-    }
-
-    @Deprecated(forRemoval = true)
-    public static SimpleContainer createListBackedContainer(NonNullList<ItemStack> items, @Nullable Container listener) {
-        SimpleContainer simpleContainer = new SimpleContainer();
-        simpleContainer.items = items;
-        if (listener != null) {
-            simpleContainer.addListener($ -> listener.setChanged());
-        }
-        return simpleContainer;
+        return ContainerMenuHelper.createListBackedContainer(this.filterItems, this);
     }
 
     public static void entityInside(Level level, BlockPos pos, BlockState blockState, Entity entity, HopperBlockEntity blockEntity) {

@@ -1,6 +1,7 @@
 package fuzs.hoppergadgetry.world.inventory;
 
 import fuzs.hoppergadgetry.init.ModRegistry;
+import fuzs.puzzleslib.api.container.v1.ContainerMenuHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -24,23 +25,12 @@ public class DuctMenu extends AbstractContainerMenu {
         checkContainerSize(container, CONTAINER_SIZE);
         container.startOpen(inventory.player);
         this.addContainerSlots(container);
-        this.addInventorySlots(inventory, 51);
+        ContainerMenuHelper.addInventorySlots(this, inventory, 51);
     }
 
     private void addContainerSlots(Container container) {
         for (int i = 0; i < container.getContainerSize(); ++i) {
             this.addSlot(new Slot(container, i, 89 - container.getContainerSize() * 18 / 2 + i * 18, 20));
-        }
-    }
-
-    private void addInventorySlots(Inventory inventory, int offsetY) {
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, i * 18 + offsetY));
-            }
-        }
-        for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(inventory, i, 8 + i * 18, 3 * 18 + offsetY + 4));
         }
     }
 

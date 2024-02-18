@@ -1,6 +1,7 @@
 package fuzs.hoppergadgetry.world.inventory;
 
 import fuzs.hoppergadgetry.init.ModRegistry;
+import fuzs.puzzleslib.api.container.v1.ContainerMenuHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -11,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class GratedHopperMenu extends AbstractContainerMenu {
     public static final int CONTAINER_SIZE = 5;
-    public static final int FILTER_CONTAINER_SIZE = 1;
+    public static final int FILTER_CONTAINER_SIZE = 5;
 
     private final Container hopper;
 
@@ -26,29 +27,20 @@ public class GratedHopperMenu extends AbstractContainerMenu {
         checkContainerSize(filterContainer, FILTER_CONTAINER_SIZE);
         container.startOpen(inventory.player);
         this.addContainerSlots(container, filterContainer);
-        this.addInventorySlots(inventory, 51);
+        ContainerMenuHelper.addInventorySlots(this, inventory, 51 + 31);
     }
 
     private void addContainerSlots(Container container, Container filterContainer) {
         for (int i = 0; i < container.getContainerSize(); ++i) {
-            this.addSlot(new Slot(container, i, 44 + 18 + i * 18, 20));
+            this.addSlot(new Slot(container, i, 89 - container.getContainerSize() * 18 / 2 + i * 18, 20));
         }
-        this.addSlot(new Slot(filterContainer, 0, 44 - 18, 20) {
-            @Override
-            public int getMaxStackSize() {
-                return 1;
-            }
-        });
-    }
-
-    private void addInventorySlots(Inventory inventory, int offsetY) {
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, i * 18 + offsetY));
-            }
-        }
-        for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(inventory, i, 8 + i * 18, 3 * 18 + offsetY + 4));
+        for (int i = 0; i < filterContainer.getContainerSize(); i++) {
+            this.addSlot(new Slot(filterContainer, i, 89 - container.getContainerSize() * 18 / 2 + i * 18, 20 + 31) {
+                @Override
+                public int getMaxStackSize() {
+                    return 1;
+                }
+            });
         }
     }
 

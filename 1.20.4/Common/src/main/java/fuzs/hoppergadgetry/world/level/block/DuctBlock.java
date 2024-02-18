@@ -78,6 +78,7 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
         for (int i = 0; i < voxelShapes.length; i++) {
 
             int x = i >> PROPERTY_BY_DIRECTION.size();
+            // don't generate shapes that will never be used
             // https://stackoverflow.com/questions/600293/how-to-check-if-a-number-is-a-power-of-2
             if (x != 0 && (x & (x - 1)) == 0) {
                 for (Direction outputDirection : PROPERTY_BY_DIRECTION.keySet()) {
@@ -122,10 +123,10 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
         return CODEC;
     }
 
-//    @Override
-//    public RenderShape getRenderShape(BlockState state) {
-//        return RenderShape.MODEL;
-//    }
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
 
     @Override
     public BlockEntityType<? extends DuctBlockEntity> getBlockEntityType() {
@@ -197,7 +198,8 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPES[this.getAABBIndex(state)];
+        VoxelShape voxelShape = SHAPES[this.getAABBIndex(state)];
+        return voxelShape != null ? voxelShape : super.getShape(state, level, pos, context);
     }
 
     @Override

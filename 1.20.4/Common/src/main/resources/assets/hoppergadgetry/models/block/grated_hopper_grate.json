@@ -1,4 +1,5 @@
 {
+  "credit": "Made by sargunv",
   "ambientocclusion": false,
   "textures": {
     "grate": "block/iron_bars"

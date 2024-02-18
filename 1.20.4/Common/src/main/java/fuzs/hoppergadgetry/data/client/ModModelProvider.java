@@ -12,7 +12,6 @@ import net.minecraft.data.models.blockstates.Variant;
 import net.minecraft.data.models.blockstates.VariantProperties;
 import net.minecraft.data.models.model.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -105,12 +104,9 @@ public class ModModelProvider extends AbstractModelProvider {
 
     @Override
     public void addItemModels(ItemModelGenerators builder) {
-        builder.generateFlatItem(ModRegistry.GRATED_HOPPER_ITEM.value(), Items.HOPPER, ModelTemplates.FLAT_ITEM);
-        builder.generateFlatItem(ModRegistry.CHUTE_ITEM.value(), Items.HOPPER, ModelTemplates.FLAT_ITEM);
-        builder.generateFlatItem(ModRegistry.DUCT_ITEM.value(), Items.HOPPER, ModelTemplates.FLAT_ITEM);
-        builder.generateFlatItem(ModRegistry.GRATED_HOPPER_MINECART_ITEM.value(),
-                Items.HOPPER_MINECART,
-                ModelTemplates.FLAT_ITEM
-        );
+        builder.generateFlatItem(ModRegistry.GRATED_HOPPER_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        builder.generateFlatItem(ModRegistry.CHUTE_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        builder.generateFlatItem(ModRegistry.DUCT_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        builder.generateFlatItem(ModRegistry.GRATED_HOPPER_MINECART_ITEM.value(), ModelTemplates.FLAT_ITEM);
     }
 }

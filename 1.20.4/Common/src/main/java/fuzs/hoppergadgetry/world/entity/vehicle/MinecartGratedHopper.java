@@ -3,6 +3,7 @@ package fuzs.hoppergadgetry.world.entity.vehicle;
 import fuzs.hoppergadgetry.init.ModRegistry;
 import fuzs.hoppergadgetry.world.inventory.GratedHopperMenu;
 import fuzs.hoppergadgetry.world.level.block.entity.GratedHopperBlockEntity;
+import fuzs.puzzleslib.api.container.v1.ContainerMenuHelper;
 import fuzs.puzzleslib.api.container.v1.ContainerSerializationHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -18,7 +19,7 @@ import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class MinecartGratedHopper extends MinecartHopper {
-    private final NonNullList<ItemStack> filterItems = NonNullList.withSize(1, ItemStack.EMPTY);
+    private final NonNullList<ItemStack> filterItems = NonNullList.withSize(GratedHopperMenu.FILTER_CONTAINER_SIZE, ItemStack.EMPTY);
 
     public MinecartGratedHopper(Level level, double x, double y, double z) {
         this(ModRegistry.GRATED_HOPPER_MINECART_ENTITY_TYPE.value(), level);
@@ -83,8 +84,7 @@ public class MinecartGratedHopper extends MinecartHopper {
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory) {
         return new GratedHopperMenu(containerId,
                 playerInventory,
-                this,
-                GratedHopperBlockEntity.createListBackedContainer(this.filterItems, this)
+                this, ContainerMenuHelper.createListBackedContainer(this.filterItems, this)
         );
     }
 
