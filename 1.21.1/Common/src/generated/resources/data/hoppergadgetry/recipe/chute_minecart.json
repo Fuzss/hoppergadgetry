@@ -3,13 +3,14 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "hoppergadgetry:grated_hopper"
+      "item": "hoppergadgetry:chute"
     },
     {
       "item": "minecraft:minecart"
     }
   ],
   "result": {
-    "item": "hoppergadgetry:grated_hopper_minecart"
+    "count": 1,
+    "id": "hoppergadgetry:chute_minecart"
   }
 }

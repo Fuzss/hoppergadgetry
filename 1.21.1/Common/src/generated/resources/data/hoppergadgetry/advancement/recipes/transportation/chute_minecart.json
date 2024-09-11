@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iron_ingot": {
+    "has_minecart": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:iron_ingot"
-            ]
+            "items": "minecraft:minecart"
           }
         ]
       },
@@ -15,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hoppergadgetry:duct"
+        "recipe": "hoppergadgetry:chute_minecart"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -23,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_iron_ingot"
+      "has_minecart"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hoppergadgetry:duct"
+      "hoppergadgetry:chute_minecart"
     ]
   }
 }

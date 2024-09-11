@@ -1,4 +1,4 @@
-// 1.20.4	2024-02-18T11:06:59.412911	Block Loot Tables
-75ea771f437d968f56e8f85b0463ed5d567666d1 data/hoppergadgetry/loot_tables/blocks/chute.json
-6ea054f4c355d5c03deae9303148842c8a25ea3d data/hoppergadgetry/loot_tables/blocks/duct.json
-72af7b6594f3d042b2d0dd4461c368af9c98aa0d data/hoppergadgetry/loot_tables/blocks/grated_hopper.json
+// 1.21.1	2024-09-11T10:30:32.685396	Block Loot Tables
+9877696b29de2d5c99bcf2400b1bc56dc81e4015 data/hoppergadgetry/loot_table/blocks/chute.json
+e82c27f71d9ead26aeca7ddbcae015e888cc4639 data/hoppergadgetry/loot_table/blocks/duct.json
+2abe682166a06d3403967401f0eba7d95c61aa72 data/hoppergadgetry/loot_table/blocks/grated_hopper.json

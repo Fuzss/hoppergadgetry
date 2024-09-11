@@ -1,6 +1,6 @@
 package fuzs.hoppergadgetry.init;
 
-import fuzs.extensibleenums.api.v2.CommonAbstractions;
+import fuzs.extensibleenums.api.v2.BuiltInEnumFactories;
 import fuzs.hoppergadgetry.HopperGadgetry;
 import fuzs.hoppergadgetry.world.entity.vehicle.MinecartChute;
 import fuzs.hoppergadgetry.world.entity.vehicle.MinecartGratedHopper;
@@ -32,8 +32,8 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 
 public class ModRegistry {
-    public static final AbstractMinecart.Type GRATED_HOPPER_MINECART_TYPE = CommonAbstractions.createMinecartType(HopperGadgetry.id("grated_hopper"));
-    public static final AbstractMinecart.Type CHUTE_MINECART_TYPE = CommonAbstractions.createMinecartType(HopperGadgetry.id("chute"));
+    public static final AbstractMinecart.Type GRATED_HOPPER_MINECART_TYPE = BuiltInEnumFactories.INSTANCE.createMinecartType(HopperGadgetry.id("grated_hopper"));
+    public static final AbstractMinecart.Type CHUTE_MINECART_TYPE = BuiltInEnumFactories.INSTANCE.createMinecartType(HopperGadgetry.id("chute"));
 
     static final RegistryManager REGISTRY = RegistryManager.from(HopperGadgetry.MOD_ID);
     public static final Holder.Reference<Block> CHUTE_BLOCK = REGISTRY.registerBlock("chute",

@@ -65,20 +65,20 @@ public class MinecartGratedHopper extends MinecartHopper {
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return this.filterItems.get(0).isEmpty() || ItemStack.isSameItemSameTags(this.filterItems.get(0), stack);
+        return this.filterItems.getFirst().isEmpty() || ItemStack.isSameItemSameComponents(this.filterItems.getFirst(), stack);
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        ContainerSerializationHelper.saveAllItems(GratedHopperBlockEntity.TAG_FILTER, compound, this.filterItems);
+        ContainerSerializationHelper.saveAllItems(GratedHopperBlockEntity.TAG_FILTER, compound, this.filterItems, this.registryAccess());
     }
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.filterItems.clear();
-        ContainerSerializationHelper.loadAllItems(GratedHopperBlockEntity.TAG_FILTER, compound, this.filterItems);
+        ContainerSerializationHelper.loadAllItems(GratedHopperBlockEntity.TAG_FILTER, compound, this.filterItems, this.registryAccess());
     }
 
     @Override

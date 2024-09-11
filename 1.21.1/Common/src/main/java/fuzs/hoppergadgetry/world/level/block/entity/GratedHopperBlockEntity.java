@@ -8,6 +8,7 @@ import fuzs.puzzleslib.api.container.v1.ContainerMenuHelper;
 import fuzs.puzzleslib.api.container.v1.ContainerSerializationHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -22,8 +23,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.Hopper;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.BooleanOp;
-import net.minecraft.world.phys.shapes.Shapes;
 
 public class GratedHopperBlockEntity extends HopperBlockEntity implements TickingBlockEntity {
     public static final Component COMPONENT_GRATED_HOPPER = Component.translatable("container.grated_hopper");
@@ -41,16 +40,16 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         this.filterItems.clear();
-        ContainerSerializationHelper.loadAllItems(TAG_FILTER, tag, this.filterItems);
+        ContainerSerializationHelper.loadAllItems(TAG_FILTER, tag, this.filterItems, registries);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        ContainerSerializationHelper.saveAllItems(TAG_FILTER, tag, this.filterItems);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        ContainerSerializationHelper.saveAllItems(TAG_FILTER, tag, this.filterItems, registries);
     }
 
     @Override
@@ -68,7 +67,7 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
         boolean isEmpty = true;
         for (ItemStack filter : this.filterItems) {
             if (!filter.isEmpty()) {
-                if (ItemStack.isSameItemSameTags(filter, stack)) {
+                if (ItemStack.isSameItemSameComponents(filter, stack)) {
                     return true;
                 } else {
                     isEmpty = false;
@@ -96,19 +95,20 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
     }
 
     public static boolean suckInItems(Level level, Hopper hopper) {
-        Container container = HopperBlockEntity.getSourceContainer(level, hopper);
+        BlockPos blockPos = BlockPos.containing(hopper.getLevelX(), hopper.getLevelY() + 1.0, hopper.getLevelZ());
+        BlockState blockState = level.getBlockState(blockPos);
+        Container container = HopperBlockEntity.getSourceContainer(level, hopper, blockPos, blockState);
         if (container != null) {
             Direction direction = Direction.DOWN;
-            return !HopperBlockEntity.isEmptyContainer(container, direction) && HopperBlockEntity.getSlots(container,
-                    direction
-            ).anyMatch((slot) -> {
+
+            for (int slot : getSlots(container, direction)) {
                 ItemStack itemStack = container.getItem(slot);
-                return hopper.canPlaceItem(0, itemStack) && HopperBlockEntity.tryTakeInItemFromSlot(hopper,
-                        container,
-                        slot,
-                        direction
-                );
-            });
+                if (hopper.canPlaceItem(0, itemStack) && tryTakeInItemFromSlot(hopper, container, slot, direction)) {
+                    return true;
+                }
+            }
+
+            return false;
         } else {
             for (ItemEntity itemEntity : HopperBlockEntity.getItemsAtAndAbove(level, hopper)) {
                 ItemStack itemStack = itemEntity.getItem();
@@ -125,11 +125,10 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
         return ContainerMenuHelper.createListBackedContainer(this.filterItems, this);
     }
 
-    public static void entityInside(Level level, BlockPos pos, BlockState blockState, Entity entity, HopperBlockEntity blockEntity) {
+    public static void entityInside(Level level, BlockPos blockPos, BlockState blockState, Entity entity, HopperBlockEntity blockEntity) {
         if (entity instanceof ItemEntity itemEntity) {
-            if (!itemEntity.getItem().isEmpty() && Shapes.joinIsNotEmpty(Shapes.create(entity.getBoundingBox()
-                    .move(-pos.getX(), -pos.getY(), -pos.getZ())), blockEntity.getSuckShape(), BooleanOp.AND)) {
-                tryMoveItems(level, pos, blockState, blockEntity, () -> {
+            if (!itemEntity.getItem().isEmpty() && entity.getBoundingBox().move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ()).intersects(blockEntity.getSuckAabb())) {
+                tryMoveItems(level, blockPos, blockState, blockEntity, () -> {
                     ItemStack itemStack = itemEntity.getItem();
                     return blockEntity.canPlaceItem(0, itemStack) && addItem(blockEntity, itemEntity);
                 });

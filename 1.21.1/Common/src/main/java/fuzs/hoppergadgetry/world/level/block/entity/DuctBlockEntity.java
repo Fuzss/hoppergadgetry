@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class DuctBlockEntity extends HopperBlockEntity implements TickingBlockEntity {
+public class DuctBlockEntity extends NonHopperBlockEntity implements TickingBlockEntity {
     public static final Component COMPONENT_DUCT = Component.translatable("container.duct");
 
     public DuctBlockEntity(BlockPos pos, BlockState blockState) {

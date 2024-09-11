@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:chest"
-            ]
+            "items": "minecraft:chest"
           }
         ]
       },
@@ -15,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hoppergadgetry:chute"
+        "recipe": "hoppergadgetry:grated_hopper"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "hoppergadgetry:chute"
+      "hoppergadgetry:grated_hopper"
     ]
   }
 }

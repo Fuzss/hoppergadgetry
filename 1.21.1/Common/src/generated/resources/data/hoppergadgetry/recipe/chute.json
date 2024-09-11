@@ -5,16 +5,17 @@
     "#": {
       "tag": "minecraft:planks"
     },
-    "I": {
-      "item": "minecraft:chest"
+    "X": {
+      "tag": "minecraft:logs"
     }
   },
   "pattern": [
     "# #",
-    "#I#",
+    "#X#",
     " # "
   ],
   "result": {
-    "item": "hoppergadgetry:chute"
+    "count": 1,
+    "id": "hoppergadgetry:chute"
   }
 }

@@ -20,8 +20,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.Hopper;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.BooleanOp;
-import net.minecraft.world.phys.shapes.Shapes;
 import org.jetbrains.annotations.Nullable;
 
 public class ChuteBlockEntity extends HopperBlockEntity implements TickingBlockEntity {
@@ -125,8 +123,7 @@ public class ChuteBlockEntity extends HopperBlockEntity implements TickingBlockE
     public static void entityInside(Level level, BlockPos blockPos, BlockState blockState, Entity entity, HopperBlockEntity blockEntity) {
         if (entity instanceof ItemEntity itemEntity && !itemEntity.getItem().isEmpty()) {
             Container container = getAttachedContainerWithSpace(level, blockPos, blockState.getValue(ChuteBlock.FACING));
-            if (container != null && Shapes.joinIsNotEmpty(Shapes.create(entity.getBoundingBox()
-                    .move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ())), blockEntity.getSuckShape(), BooleanOp.AND)) {
+            if (container != null && entity.getBoundingBox().move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ()).intersects(blockEntity.getSuckAabb())) {
                 addItem(container, itemEntity);
             }
         }

@@ -4,6 +4,7 @@ import fuzs.hoppergadgetry.init.ModRegistry;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.api.core.v1.context.CreativeModeTabContext;
 import fuzs.puzzleslib.api.core.v1.context.FuelBurnTimesContext;
+import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import fuzs.puzzleslib.api.item.v2.CreativeModeTabConfigurator;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
@@ -38,6 +39,6 @@ public class HopperGadgetry implements ModConstructor {
     }
 
     public static ResourceLocation id(String path) {
-        return new ResourceLocation(MOD_ID, path);
+        return ResourceLocationHelper.fromNamespaceAndPath(MOD_ID, path);
     }
 }

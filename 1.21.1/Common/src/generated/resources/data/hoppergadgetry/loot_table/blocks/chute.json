@@ -13,15 +13,18 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:copy_name",
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:custom_name"
+              ],
               "source": "block_entity"
             }
           ],
-          "name": "hoppergadgetry:grated_hopper"
+          "name": "hoppergadgetry:chute"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "hoppergadgetry:blocks/grated_hopper"
+  "random_sequence": "hoppergadgetry:blocks/chute"
 }

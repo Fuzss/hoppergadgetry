@@ -8,12 +8,9 @@ import fuzs.puzzleslib.api.shape.v1.ShapesHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -84,7 +81,7 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     }
 
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
 
@@ -115,7 +112,7 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
@@ -203,15 +200,6 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        if (stack.hasCustomHoverName()) {
-            if (level.getBlockEntity(pos) instanceof HopperBlockEntity blockEntity) {
-                blockEntity.setCustomName(stack.getHoverName());
-            }
-        }
     }
 
     @Override
