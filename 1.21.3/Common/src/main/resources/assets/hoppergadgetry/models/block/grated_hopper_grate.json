@@ -1,0 +1,32 @@
+{
+  "credit": "Made by sargunv",
+  "ambientocclusion": false,
+  "textures": {
+    "grate": "block/iron_bars"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        14,
+        2
+      ],
+      "to": [
+        14,
+        14,
+        14
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#grate"
+        }
+      }
+    }
+  ]
+}
