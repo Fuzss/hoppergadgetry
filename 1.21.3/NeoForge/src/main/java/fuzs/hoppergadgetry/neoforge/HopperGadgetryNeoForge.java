@@ -20,9 +20,10 @@ public class HopperGadgetryNeoForge {
     public HopperGadgetryNeoForge() {
         ModConstructor.construct(HopperGadgetry.MOD_ID, HopperGadgetry::new);
         registerCapabilities();
-        DataProviderHelper.registerDataProviders(HopperGadgetry.MOD_ID, ModBlockLootProvider::new,
-                ModRecipeProvider::new, ModBlockTagProvider::new
-        );
+        DataProviderHelper.registerDataProviders(HopperGadgetry.MOD_ID,
+                ModBlockLootProvider::new,
+                ModRecipeProvider::new,
+                ModBlockTagProvider::new);
     }
 
     private static void registerCapabilities() {

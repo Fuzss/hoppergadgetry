@@ -4,13 +4,15 @@ import fuzs.hoppergadgetry.HopperGadgetry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 
 public class HopperLikeScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
-    public static final ResourceLocation GRATED_HOPPER_LOCATION = HopperGadgetry.id("textures/gui/container/grated_hopper.png");
+    public static final ResourceLocation GRATED_HOPPER_LOCATION = HopperGadgetry.id(
+            "textures/gui/container/grated_hopper.png");
     public static final ResourceLocation DUCT_LOCATION = HopperGadgetry.id("textures/gui/container/duct.png");
     public static final int GRATED_HOPPER_IMAGE_HEIGHT = 164;
     public static final int DUCT_IMAGE_HEIGHT = 133;
@@ -38,6 +40,15 @@ public class HopperLikeScreen<T extends AbstractContainerMenu> extends AbstractC
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-        guiGraphics.blit(this.resourceLocation, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(RenderType::guiTextured,
+                this.resourceLocation,
+                this.leftPos,
+                this.topPos,
+                0,
+                0,
+                this.imageWidth,
+                this.imageHeight,
+                256,
+                256);
     }
 }

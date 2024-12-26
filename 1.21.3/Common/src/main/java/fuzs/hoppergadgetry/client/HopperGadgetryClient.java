@@ -12,7 +12,10 @@ import fuzs.puzzleslib.api.client.init.v1.ModelLayerFactory;
 import net.minecraft.client.model.MinecartModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MinecartRenderer;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.level.block.Block;
 
 public class HopperGadgetryClient implements ClientModConstructor {
@@ -23,23 +26,24 @@ public class HopperGadgetryClient implements ClientModConstructor {
     @Override
     public void onRegisterEntityRenderers(EntityRenderersContext context) {
         context.registerEntityRenderer(ModRegistry.GRATED_HOPPER_MINECART_ENTITY_TYPE.value(),
-                context1 -> new MinecartRenderer<>(context1, GRATED_HOPPER_MINECART)
-        );
+                getMinecartRendererProvider(GRATED_HOPPER_MINECART));
         context.registerEntityRenderer(ModRegistry.CHUTE_MINECART_ENTITY_TYPE.value(),
-                context1 -> new MinecartRenderer<>(context1, CHUTE_MINECART)
-        );
+                getMinecartRendererProvider(CHUTE_MINECART));
+    }
+
+    @SuppressWarnings("unchecked")
+    static <T extends AbstractMinecart> EntityRendererProvider<T> getMinecartRendererProvider(ModelLayerLocation modelLayerLocation) {
+        return (EntityRendererProvider.Context context) -> (EntityRenderer<T, ?>) new MinecartRenderer(context,
+                modelLayerLocation);
     }
 
     @Override
     public void onRegisterMenuScreens(MenuScreensContext context) {
         context.registerMenuScreen(ModRegistry.GRATED_HOPPER_MENU_TYPE.value(),
                 HopperLikeScreen.create(HopperLikeScreen.GRATED_HOPPER_LOCATION,
-                        HopperLikeScreen.GRATED_HOPPER_IMAGE_HEIGHT
-                )
-        );
+                        HopperLikeScreen.GRATED_HOPPER_IMAGE_HEIGHT));
         context.registerMenuScreen(ModRegistry.DUCT_MENU_TYPE.value(),
-                HopperLikeScreen.create(HopperLikeScreen.DUCT_LOCATION, HopperLikeScreen.DUCT_IMAGE_HEIGHT)
-        );
+                HopperLikeScreen.create(HopperLikeScreen.DUCT_LOCATION, HopperLikeScreen.DUCT_IMAGE_HEIGHT));
     }
 
     @Override

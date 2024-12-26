@@ -4,9 +4,10 @@ import com.mojang.serialization.MapCodec;
 import fuzs.hoppergadgetry.init.ModRegistry;
 import fuzs.hoppergadgetry.world.level.block.entity.DuctBlockEntity;
 import fuzs.puzzleslib.api.block.v1.entity.TickingEntityBlock;
-import fuzs.puzzleslib.api.shape.v1.ShapesHelper;
+import fuzs.puzzleslib.api.util.v1.ShapesHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +15,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
@@ -22,19 +24,21 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
 public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<DuctBlockEntity> {
     public static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = PipeBlock.PROPERTY_BY_DIRECTION;
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
     public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
@@ -51,18 +55,20 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     private static final VoxelShape[] SHAPES = makeVoxelShapes();
     private static final Property<?>[] FACING_PROPERTIES = new Property[]{
             // order matters, check hopper facing first
-            BlockStateProperties.FACING_HOPPER,
-            BlockStateProperties.FACING,
-            BlockStateProperties.HORIZONTAL_FACING
+            BlockStateProperties.FACING_HOPPER, BlockStateProperties.FACING, BlockStateProperties.HORIZONTAL_FACING
     };
 
     public DuctBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.DOWN).setValue(ENABLED,
-                Boolean.TRUE
-        ).setValue(NORTH, Boolean.FALSE).setValue(EAST, Boolean.FALSE).setValue(SOUTH, Boolean.FALSE).setValue(WEST,
-                Boolean.FALSE
-        ).setValue(UP, Boolean.FALSE).setValue(DOWN, Boolean.FALSE));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.DOWN)
+                .setValue(ENABLED, Boolean.TRUE)
+                .setValue(NORTH, Boolean.FALSE)
+                .setValue(EAST, Boolean.FALSE)
+                .setValue(SOUTH, Boolean.FALSE)
+                .setValue(WEST, Boolean.FALSE)
+                .setValue(UP, Boolean.FALSE)
+                .setValue(DOWN, Boolean.FALSE));
     }
 
     @Override
@@ -86,15 +92,21 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        BlockState blockState = super.updateShape(state, direction, neighborState, level, pos, neighborPos);
-        return blockState.setValue(PROPERTY_BY_DIRECTION.get(direction),
-                this.canConnect(neighborState, direction.getOpposite())
-        );
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        state = super.updateShape(state,
+                level,
+                scheduledTickAccess,
+                pos,
+                direction,
+                neighborPos,
+                neighborState,
+                random);
+        return state.setValue(PROPERTY_BY_DIRECTION.get(direction),
+                this.canConnect(neighborState, direction.getOpposite()));
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
         this.checkPoweredState(level, pos, state);
     }
 
@@ -172,7 +184,7 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
+    public boolean propagatesSkylightDown(BlockState blockState) {
         return false;
     }
 
@@ -181,8 +193,8 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
         Direction direction = context.getClickedFace().getOpposite();
         BlockState blockState = this.defaultBlockState().setValue(FACING, direction).setValue(ENABLED, Boolean.TRUE);
         for (Map.Entry<Direction, BooleanProperty> entry : PROPERTY_BY_DIRECTION.entrySet()) {
-            BlockState neighborBlockState = context.getLevel().getBlockState(context.getClickedPos()
-                    .relative(entry.getKey()));
+            BlockState neighborBlockState = context.getLevel()
+                    .getBlockState(context.getClickedPos().relative(entry.getKey()));
             if (this.canConnect(neighborBlockState, entry.getKey().getOpposite())) {
                 blockState = blockState.setValue(entry.getValue(), Boolean.TRUE);
             }

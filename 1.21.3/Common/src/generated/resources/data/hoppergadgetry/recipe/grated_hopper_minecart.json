@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "hoppergadgetry:grated_hopper"
-    },
-    {
-      "item": "minecraft:minecart"
-    }
+    "hoppergadgetry:grated_hopper",
+    "minecraft:minecart"
   ],
   "result": {
     "count": 1,

@@ -20,7 +20,8 @@ import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class MinecartGratedHopper extends MinecartHopper {
-    private final NonNullList<ItemStack> filterItems = NonNullList.withSize(GratedHopperMenu.FILTER_CONTAINER_SIZE, ItemStack.EMPTY);
+    private final NonNullList<ItemStack> filterItems = NonNullList.withSize(GratedHopperMenu.FILTER_CONTAINER_SIZE,
+            ItemStack.EMPTY);
 
     public MinecartGratedHopper(Level level, double x, double y, double z) {
         this(ModRegistry.GRATED_HOPPER_MINECART_ENTITY_TYPE.value(), level);
@@ -35,11 +36,6 @@ public class MinecartGratedHopper extends MinecartHopper {
     }
 
     @Override
-    public Type getMinecartType() {
-        return ModRegistry.GRATED_HOPPER_MINECART_TYPE;
-    }
-
-    @Override
     public BlockState getDefaultDisplayBlockState() {
         return ModRegistry.GRATED_HOPPER_BLOCK.value().defaultBlockState();
     }
@@ -49,10 +45,10 @@ public class MinecartGratedHopper extends MinecartHopper {
         if (GratedHopperBlockEntity.suckInItems(this.level(), this)) {
             return true;
         } else {
-            for (ItemEntity itemEntity : this.level().getEntitiesOfClass(ItemEntity.class,
-                    this.getBoundingBox().inflate(0.25, 0.0, 0.25),
-                    EntitySelector.ENTITY_STILL_ALIVE
-            )) {
+            for (ItemEntity itemEntity : this.level()
+                    .getEntitiesOfClass(ItemEntity.class,
+                            this.getBoundingBox().inflate(0.25, 0.0, 0.25),
+                            EntitySelector.ENTITY_STILL_ALIVE)) {
                 ItemStack itemStack = itemEntity.getItem();
                 if (this.canPlaceItem(0, itemStack) && HopperBlockEntity.addItem(this, itemEntity)) {
                     return true;
@@ -65,28 +61,35 @@ public class MinecartGratedHopper extends MinecartHopper {
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return this.filterItems.getFirst().isEmpty() || ItemStack.isSameItemSameComponents(this.filterItems.getFirst(), stack);
+        return this.filterItems.getFirst().isEmpty() ||
+                ItemStack.isSameItemSameComponents(this.filterItems.getFirst(), stack);
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        ContainerSerializationHelper.saveAllItems(GratedHopperBlockEntity.TAG_FILTER, compound, this.filterItems, this.registryAccess());
+        ContainerSerializationHelper.saveAllItems(GratedHopperBlockEntity.TAG_FILTER,
+                compound,
+                this.filterItems,
+                this.registryAccess());
     }
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.filterItems.clear();
-        ContainerSerializationHelper.loadAllItems(GratedHopperBlockEntity.TAG_FILTER, compound, this.filterItems, this.registryAccess());
+        ContainerSerializationHelper.loadAllItems(GratedHopperBlockEntity.TAG_FILTER,
+                compound,
+                this.filterItems,
+                this.registryAccess());
     }
 
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory) {
         return new GratedHopperMenu(containerId,
                 playerInventory,
-                this, ContainerMenuHelper.createListBackedContainer(this.filterItems, this)
-        );
+                this,
+                ContainerMenuHelper.createListBackedContainer(this.filterItems, this));
     }
 
     @Override

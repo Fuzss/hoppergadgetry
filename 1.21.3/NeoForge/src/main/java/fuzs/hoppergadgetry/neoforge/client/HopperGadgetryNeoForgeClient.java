@@ -14,8 +14,8 @@ public class HopperGadgetryNeoForgeClient {
 
     public HopperGadgetryNeoForgeClient() {
         ClientModConstructor.construct(HopperGadgetry.MOD_ID, HopperGadgetryClient::new);
-        DataProviderHelper.registerDataProviders(HopperGadgetry.MOD_ID, ModLanguageProvider::new,
-                ModModelProvider::new
-        );
+        DataProviderHelper.registerDataProviders(HopperGadgetry.MOD_ID,
+                ModLanguageProvider::new,
+                ModModelProvider::new);
     }
 }

@@ -3,12 +3,8 @@
   "category": "redstone",
   "group": "grated_hopper",
   "key": {
-    "#": {
-      "item": "minecraft:iron_bars"
-    },
-    "X": {
-      "item": "minecraft:hopper"
-    }
+    "#": "minecraft:iron_bars",
+    "X": "minecraft:hopper"
   },
   "pattern": [
     "#",

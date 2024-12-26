@@ -37,11 +37,6 @@ public class MinecartChute extends MinecartHopper {
     }
 
     @Override
-    public Type getMinecartType() {
-        return ModRegistry.CHUTE_MINECART_TYPE;
-    }
-
-    @Override
     public BlockState getDefaultDisplayBlockState() {
         return ModRegistry.CHUTE_BLOCK.value().defaultBlockState();
     }
@@ -84,19 +79,16 @@ public class MinecartChute extends MinecartHopper {
     @Override
     public boolean suckInItems() {
         BlockPos blockPos = BlockPos.containing(this.getLevelX(), this.getLevelY(), this.getLevelZ());
-        Container container = ChuteBlockEntity.getAttachedContainerWithSpace(this.level(),
-                blockPos,
-                Direction.DOWN
-        );
+        Container container = ChuteBlockEntity.getAttachedContainerWithSpace(this.level(), blockPos, Direction.DOWN);
         if (container == null) {
             return false;
         } else if (ChuteBlockEntity.suckInItems(this.level(), this, container)) {
             return true;
         } else {
-            for (ItemEntity itemEntity : this.level().getEntitiesOfClass(ItemEntity.class,
-                    this.getBoundingBox().inflate(0.25, 0.0, 0.25),
-                    EntitySelector.ENTITY_STILL_ALIVE
-            )) {
+            for (ItemEntity itemEntity : this.level()
+                    .getEntitiesOfClass(ItemEntity.class,
+                            this.getBoundingBox().inflate(0.25, 0.0, 0.25),
+                            EntitySelector.ENTITY_STILL_ALIVE)) {
                 if (HopperBlockEntity.addItem(container, itemEntity)) {
                     return true;
                 }

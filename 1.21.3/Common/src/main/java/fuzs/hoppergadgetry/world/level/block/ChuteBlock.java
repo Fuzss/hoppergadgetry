@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -25,7 +25,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class ChuteBlock extends BaseEntityBlock implements TickingEntityBlock<ChuteBlockEntity> {
     public static final MapCodec<ChuteBlock> CODEC = simpleCodec(ChuteBlock::new);
-    public static final DirectionProperty FACING = BlockStateProperties.FACING_HOPPER;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING_HOPPER;
     public static final VoxelShape TOP = Block.box(0.0, 10.0, 0.0, 16.0, 16.0, 16.0);
     public static final VoxelShape FUNNEL = Block.box(4.0, 0.0, 4.0, 12.0, 10.0, 12.0);
     public static final VoxelShape INSIDE = box(2.0, 11.0, 2.0, 14.0, 16.0, 14.0);
