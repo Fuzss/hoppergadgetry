@@ -23,14 +23,6 @@ public class MinecartGratedHopper extends MinecartHopper {
     private final NonNullList<ItemStack> filterItems = NonNullList.withSize(GratedHopperMenu.FILTER_CONTAINER_SIZE,
             ItemStack.EMPTY);
 
-    public MinecartGratedHopper(Level level, double x, double y, double z) {
-        this(ModRegistry.GRATED_HOPPER_MINECART_ENTITY_TYPE.value(), level);
-        this.setPos(x, y, z);
-        this.xo = x;
-        this.yo = y;
-        this.zo = z;
-    }
-
     public MinecartGratedHopper(EntityType<? extends MinecartHopper> entityType, Level level) {
         super(entityType, level);
     }

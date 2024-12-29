@@ -24,14 +24,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class MinecartChute extends MinecartHopper {
 
-    public MinecartChute(Level level, double x, double y, double z) {
-        this(ModRegistry.CHUTE_MINECART_ENTITY_TYPE.value(), level);
-        this.setPos(x, y, z);
-        this.xo = x;
-        this.yo = y;
-        this.zo = z;
-    }
-
     public MinecartChute(EntityType<? extends MinecartHopper> entityType, Level level) {
         super(entityType, level);
     }
