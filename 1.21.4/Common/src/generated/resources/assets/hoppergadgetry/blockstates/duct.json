@@ -1,174 +1,174 @@
 {
   "multipart": [
     {
-      "when": {
-        "facing": "north",
-        "enabled": false
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct_powered"
+      },
+      "when": {
+        "enabled": "false",
+        "facing": "north"
       }
     },
     {
-      "when": {
-        "facing": "east",
-        "enabled": false
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct_powered",
         "y": 90
+      },
+      "when": {
+        "enabled": "false",
+        "facing": "east"
       }
     },
     {
-      "when": {
-        "facing": "south",
-        "enabled": false
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct_powered",
         "y": 180
+      },
+      "when": {
+        "enabled": "false",
+        "facing": "south"
       }
     },
     {
-      "when": {
-        "facing": "west",
-        "enabled": false
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct_powered",
         "y": 270
+      },
+      "when": {
+        "enabled": "false",
+        "facing": "west"
       }
     },
     {
-      "when": {
-        "facing": "down",
-        "enabled": false
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct_powered",
         "x": 90
+      },
+      "when": {
+        "enabled": "false",
+        "facing": "down"
       }
     },
     {
-      "when": {
-        "facing": "up",
-        "enabled": false
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct_powered",
         "x": 270
+      },
+      "when": {
+        "enabled": "false",
+        "facing": "up"
       }
     },
     {
-      "when": {
-        "facing": "north",
-        "enabled": true
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct"
+      },
+      "when": {
+        "enabled": "true",
+        "facing": "north"
       }
     },
     {
-      "when": {
-        "facing": "east",
-        "enabled": true
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct",
         "y": 90
+      },
+      "when": {
+        "enabled": "true",
+        "facing": "east"
       }
     },
     {
-      "when": {
-        "facing": "south",
-        "enabled": true
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct",
         "y": 180
+      },
+      "when": {
+        "enabled": "true",
+        "facing": "south"
       }
     },
     {
-      "when": {
-        "facing": "west",
-        "enabled": true
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct",
         "y": 270
+      },
+      "when": {
+        "enabled": "true",
+        "facing": "west"
       }
     },
     {
-      "when": {
-        "facing": "down",
-        "enabled": true
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct",
         "x": 90
+      },
+      "when": {
+        "enabled": "true",
+        "facing": "down"
       }
     },
     {
-      "when": {
-        "facing": "up",
-        "enabled": true
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct",
         "x": 270
+      },
+      "when": {
+        "enabled": "true",
+        "facing": "up"
       }
     },
     {
-      "when": {
-        "north": "true"
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct_input"
+      },
+      "when": {
+        "north": "true"
       }
     },
     {
-      "when": {
-        "east": "true"
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct_input",
         "y": 90
+      },
+      "when": {
+        "east": "true"
       }
     },
     {
-      "when": {
-        "south": "true"
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct_input",
         "y": 180
+      },
+      "when": {
+        "south": "true"
       }
     },
     {
-      "when": {
-        "west": "true"
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct_input",
         "y": 270
+      },
+      "when": {
+        "west": "true"
       }
     },
     {
-      "when": {
-        "down": "true"
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct_input",
         "x": 90
+      },
+      "when": {
+        "down": "true"
       }
     },
     {
-      "when": {
-        "up": "true"
-      },
       "apply": {
         "model": "hoppergadgetry:block/duct_input",
         "x": 270
+      },
+      "when": {
+        "up": "true"
       }
     }
   ]

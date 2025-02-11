@@ -17,9 +17,9 @@ public class ModBlockTagProvider extends AbstractTagProvider<Block> {
 
     @Override
     public void addTags(HolderLookup.Provider provider) {
-        this.add(BlockTags.MINEABLE_WITH_PICKAXE).add(ModRegistry.GRATED_HOPPER_BLOCK.value());
-        this.add(BlockTags.MINEABLE_WITH_AXE).add(ModRegistry.CHUTE_BLOCK.value(), ModRegistry.DUCT_BLOCK.value());
-        this.add(ModRegistry.DUCT_INPUTS_BLOCK_TAG).add(Blocks.HOPPER, ModRegistry.DUCT_BLOCK.value(),
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModRegistry.GRATED_HOPPER_BLOCK.value());
+        this.tag(BlockTags.MINEABLE_WITH_AXE).add(ModRegistry.CHUTE_BLOCK.value(), ModRegistry.DUCT_BLOCK.value());
+        this.tag(ModRegistry.DUCT_INPUTS_BLOCK_TAG).add(Blocks.HOPPER, ModRegistry.DUCT_BLOCK.value(),
                 ModRegistry.GRATED_HOPPER_BLOCK.value(), ModRegistry.CHUTE_BLOCK.value()
         );
     }

@@ -1,7 +1,0 @@
-{
-  "parent": "hoppergadgetry:block/duct",
-  "credit": "Made by sargunv",
-  "textures": {
-    "texture": "hoppergadgetry:block/duct_powered"
-  }
-}

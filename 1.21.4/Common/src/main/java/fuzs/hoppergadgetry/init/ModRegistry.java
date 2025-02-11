@@ -18,6 +18,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.MinecartItem;
 import net.minecraft.world.level.block.Block;
@@ -71,6 +72,8 @@ public class ModRegistry {
     public static final Holder.Reference<Item> CHUTE_MINECART_ITEM = REGISTRIES.registerItem("chute_minecart",
             (Item.Properties properties) -> new MinecartItem(CHUTE_MINECART_ENTITY_TYPE.value(), properties),
             () -> new Item.Properties().stacksTo(1));
+    public static final Holder.Reference<CreativeModeTab> CREATIVE_MODE_TAB = REGISTRIES.registerCreativeModeTab(
+            DUCT_ITEM);
     public static final Holder.Reference<BlockEntityType<GratedHopperBlockEntity>> GRATED_HOPPER_BLOCK_ENTITY_TYPE = REGISTRIES.registerBlockEntityType(
             "grated_hopper",
             GratedHopperBlockEntity::new,

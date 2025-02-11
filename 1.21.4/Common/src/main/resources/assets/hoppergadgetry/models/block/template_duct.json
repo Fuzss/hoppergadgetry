@@ -2,10 +2,6 @@
   "parent": "minecraft:block/block",
   "credit": "Made with Blockbench by sargunv",
   "ambientocclusion": false,
-  "textures": {
-    "texture": "hoppergadgetry:block/duct",
-    "particle": "hoppergadgetry:block/duct"
-  },
   "elements": [
     {
       "from": [

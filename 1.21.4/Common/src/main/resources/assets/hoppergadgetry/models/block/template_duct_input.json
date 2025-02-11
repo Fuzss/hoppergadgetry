@@ -1,9 +1,6 @@
 {
   "credit": "Made with Blockbench by sargunv",
   "ambientocclusion": false,
-  "textures": {
-    "texture": "hoppergadgetry:block/duct_input"
-  },
   "elements": [
     {
       "from": [

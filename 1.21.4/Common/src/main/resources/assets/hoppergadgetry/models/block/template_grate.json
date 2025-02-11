@@ -1,9 +1,6 @@
 {
   "credit": "Made by sargunv",
   "ambientocclusion": false,
-  "textures": {
-    "grate": "block/iron_bars"
-  },
   "elements": [
     {
       "from": [
@@ -24,7 +21,7 @@
             14,
             14
           ],
-          "texture": "#grate"
+          "texture": "#texture"
         }
       }
     }
