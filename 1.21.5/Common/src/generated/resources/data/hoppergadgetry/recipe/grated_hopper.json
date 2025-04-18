@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "grated_hopper",
+  "key": {
+    "#": "minecraft:iron_bars",
+    "C": "minecraft:chest",
+    "I": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "I#I",
+    "ICI",
+    " I "
+  ],
+  "result": {
+    "count": 1,
+    "id": "hoppergadgetry:grated_hopper"
+  }
+}

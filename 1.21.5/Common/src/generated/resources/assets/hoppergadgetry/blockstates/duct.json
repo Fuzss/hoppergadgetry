@@ -1,0 +1,175 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct_powered"
+      },
+      "when": {
+        "enabled": "false",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct_powered",
+        "y": 90
+      },
+      "when": {
+        "enabled": "false",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct_powered",
+        "y": 180
+      },
+      "when": {
+        "enabled": "false",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct_powered",
+        "y": 270
+      },
+      "when": {
+        "enabled": "false",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct_powered",
+        "x": 90
+      },
+      "when": {
+        "enabled": "false",
+        "facing": "down"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct_powered",
+        "x": 270
+      },
+      "when": {
+        "enabled": "false",
+        "facing": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct"
+      },
+      "when": {
+        "enabled": "true",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct",
+        "y": 90
+      },
+      "when": {
+        "enabled": "true",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct",
+        "y": 180
+      },
+      "when": {
+        "enabled": "true",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct",
+        "y": 270
+      },
+      "when": {
+        "enabled": "true",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct",
+        "x": 90
+      },
+      "when": {
+        "enabled": "true",
+        "facing": "down"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct",
+        "x": 270
+      },
+      "when": {
+        "enabled": "true",
+        "facing": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct_input"
+      },
+      "when": {
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct_input",
+        "y": 90
+      },
+      "when": {
+        "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct_input",
+        "y": 180
+      },
+      "when": {
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct_input",
+        "y": 270
+      },
+      "when": {
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct_input",
+        "x": 90
+      },
+      "when": {
+        "down": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "hoppergadgetry:block/duct_input",
+        "x": 270
+      },
+      "when": {
+        "up": "true"
+      }
+    }
+  ]
+}

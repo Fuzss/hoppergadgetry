@@ -1,0 +1,10 @@
+{
+  "values": {
+    "hoppergadgetry:chute": {
+      "burn_time": 300
+    },
+    "hoppergadgetry:duct": {
+      "burn_time": 300
+    }
+  }
+}
