@@ -7,6 +7,7 @@ import fuzs.puzzleslib.api.block.v1.entity.TickingEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -62,7 +63,7 @@ public class ChuteBlock extends BaseEntityBlock implements TickingEntityBlock<Ch
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (level.getBlockEntity(pos) instanceof ChuteBlockEntity blockEntity) {
             ChuteBlockEntity.entityInside(level, pos, state, entity, blockEntity);
         }

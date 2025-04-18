@@ -5,8 +5,10 @@ import fuzs.hoppergadgetry.init.ModRegistry;
 import fuzs.hoppergadgetry.world.level.block.entity.GratedHopperBlockEntity;
 import fuzs.puzzleslib.api.block.v1.entity.TickingEntityBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HopperBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -44,19 +46,12 @@ public class GratedHopperBlock extends HopperBlock implements TickingEntityBlock
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock())) {
-            if (level.getBlockEntity(pos) instanceof GratedHopperBlockEntity blockEntity) {
-                Containers.dropContents(level, pos, blockEntity.getFilterContainer());
-            }
-
-        }
-
-        super.onRemove(state, level, pos, newState, movedByPiston);
+    protected void affectNeighborsAfterRemoval(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, boolean movedByPiston) {
+        Containers.updateNeighboursAfterDestroy(blockState, serverLevel, blockPos);
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (level.getBlockEntity(pos) instanceof GratedHopperBlockEntity blockEntity) {
             GratedHopperBlockEntity.entityInside(level, pos, state, entity, blockEntity);
         }

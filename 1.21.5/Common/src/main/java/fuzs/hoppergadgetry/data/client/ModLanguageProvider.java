@@ -16,7 +16,7 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
 
     @Override
     public void addTranslations(TranslationBuilder builder) {
-        builder.addCreativeModeTab(HopperGadgetry.MOD_ID, HopperGadgetry.MOD_NAME);
+        builder.add(ModRegistry.CREATIVE_MODE_TAB.value(), HopperGadgetry.MOD_NAME);
         builder.add(ModRegistry.CHUTE_BLOCK.value(), "Chute");
         builder.add(ModRegistry.DUCT_BLOCK.value(), "Duct");
         builder.add(ModRegistry.GRATED_HOPPER_BLOCK.value(), "Grated Hopper");
