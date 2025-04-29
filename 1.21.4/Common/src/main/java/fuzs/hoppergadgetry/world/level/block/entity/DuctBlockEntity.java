@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.HopperBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jetbrains.annotations.Nullable;
 
 public class DuctBlockEntity extends NonHopperBlockEntity implements TickingBlockEntity {
@@ -25,6 +26,11 @@ public class DuctBlockEntity extends NonHopperBlockEntity implements TickingBloc
     public DuctBlockEntity(BlockPos pos, BlockState blockState) {
         super(pos, blockState);
         this.setItems(NonNullList.withSize(1, ItemStack.EMPTY));
+    }
+
+    @Override
+    protected EnumProperty<Direction> getFacingProperty() {
+        return DuctBlock.FACING;
     }
 
     @Override
