@@ -42,5 +42,11 @@
     "extensibleenums": "*",
     "minecraft": "${minecraftVersion}",
     "java": ">=17"
+  },
+
+  "custom": {
+    "lithium:options": {
+      "mixin.minimal_nonvanilla.world.block_entity_ticking.support_cache": false
+    }
   }
 }

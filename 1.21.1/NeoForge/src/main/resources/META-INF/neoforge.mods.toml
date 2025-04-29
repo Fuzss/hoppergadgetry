@@ -55,3 +55,6 @@ side = "BOTH"
 
 [modproperties.${ modId }]
 catalogueImageIcon = "mod_logo.png"
+
+["lithium:options"]
+"mixin.minimal_nonvanilla.world.block_entity_ticking.support_cache" = false
