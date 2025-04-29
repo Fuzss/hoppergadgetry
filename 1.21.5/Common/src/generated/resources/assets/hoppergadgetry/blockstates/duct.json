@@ -123,6 +123,7 @@
         "model": "hoppergadgetry:block/duct_input"
       },
       "when": {
+        "facing": "!north",
         "north": "true"
       }
     },
@@ -132,7 +133,8 @@
         "y": 90
       },
       "when": {
-        "east": "true"
+        "east": "true",
+        "facing": "!east"
       }
     },
     {
@@ -141,6 +143,7 @@
         "y": 180
       },
       "when": {
+        "facing": "!south",
         "south": "true"
       }
     },
@@ -150,6 +153,7 @@
         "y": 270
       },
       "when": {
+        "facing": "!west",
         "west": "true"
       }
     },
@@ -159,7 +163,8 @@
         "x": 90
       },
       "when": {
-        "down": "true"
+        "down": "true",
+        "facing": "!down"
       }
     },
     {
@@ -168,6 +173,7 @@
         "x": 270
       },
       "when": {
+        "facing": "!up",
         "up": "true"
       }
     }

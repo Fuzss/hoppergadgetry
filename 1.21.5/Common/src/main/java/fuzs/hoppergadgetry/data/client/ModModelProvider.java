@@ -101,17 +101,25 @@ public class ModModelProvider extends AbstractModelProvider {
                 .with(BlockModelGenerators.condition()
                         .term(DuctBlock.FACING, Direction.UP)
                         .term(DuctBlock.ENABLED, Boolean.TRUE), blockModel.with(BlockModelGenerators.X_ROT_270))
-                .with(BlockModelGenerators.condition().term(DuctBlock.NORTH, Boolean.TRUE), inputModel)
-                .with(BlockModelGenerators.condition().term(DuctBlock.EAST, Boolean.TRUE),
-                        inputModel.with(BlockModelGenerators.Y_ROT_90))
-                .with(BlockModelGenerators.condition().term(DuctBlock.SOUTH, Boolean.TRUE),
+                .with(BlockModelGenerators.condition()
+                        .term(DuctBlock.NORTH, Boolean.TRUE)
+                        .negatedTerm(DuctBlock.FACING, Direction.NORTH), inputModel)
+                .with(BlockModelGenerators.condition()
+                        .term(DuctBlock.EAST, Boolean.TRUE)
+                        .negatedTerm(DuctBlock.FACING, Direction.EAST), inputModel.with(BlockModelGenerators.Y_ROT_90))
+                .with(BlockModelGenerators.condition()
+                                .term(DuctBlock.SOUTH, Boolean.TRUE)
+                                .negatedTerm(DuctBlock.FACING, Direction.SOUTH),
                         inputModel.with(BlockModelGenerators.Y_ROT_180))
-                .with(BlockModelGenerators.condition().term(DuctBlock.WEST, Boolean.TRUE),
-                        inputModel.with(BlockModelGenerators.Y_ROT_270))
-                .with(BlockModelGenerators.condition().term(DuctBlock.DOWN, Boolean.TRUE),
-                        inputModel.with(BlockModelGenerators.X_ROT_90))
-                .with(BlockModelGenerators.condition().term(DuctBlock.UP, Boolean.TRUE),
-                        inputModel.with(BlockModelGenerators.X_ROT_270)));
+                .with(BlockModelGenerators.condition()
+                        .term(DuctBlock.WEST, Boolean.TRUE)
+                        .negatedTerm(DuctBlock.FACING, Direction.WEST), inputModel.with(BlockModelGenerators.Y_ROT_270))
+                .with(BlockModelGenerators.condition()
+                        .term(DuctBlock.DOWN, Boolean.TRUE)
+                        .negatedTerm(DuctBlock.FACING, Direction.DOWN), inputModel.with(BlockModelGenerators.X_ROT_90))
+                .with(BlockModelGenerators.condition()
+                        .term(DuctBlock.UP, Boolean.TRUE)
+                        .negatedTerm(DuctBlock.FACING, Direction.UP), inputModel.with(BlockModelGenerators.X_ROT_270)));
 
     }
 

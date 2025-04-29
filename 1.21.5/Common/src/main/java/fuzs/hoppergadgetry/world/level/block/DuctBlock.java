@@ -236,7 +236,7 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
                         VoxelShape voxelShape = Shapes.or(SHAPE, DIRECTIONAL_OUTPUT_SHAPES.get(outputDirection));
                         for (Direction inputDirection : PROPERTY_BY_DIRECTION.keySet()) {
 
-                            if ((i & 1 << inputDirection.get3DDataValue()) != 0) {
+                            if (outputDirection != inputDirection && (i & 1 << inputDirection.get3DDataValue()) != 0) {
 
                                 voxelShape = Shapes.or(voxelShape, DIRECTIONAL_INPUT_SHAPES.get(inputDirection));
                             }

@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
@@ -17,14 +18,21 @@ import net.minecraft.world.level.block.HopperBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jetbrains.annotations.Nullable;
 
-public class DuctBlockEntity extends NonHopperBlockEntity implements TickingBlockEntity {
+public class DuctBlockEntity extends NonHopperBlockEntity implements WorldlyContainer, TickingBlockEntity {
     public static final Component COMPONENT_DUCT = Component.translatable("container.duct");
+    static final int[] SLOTS = {0};
 
     public DuctBlockEntity(BlockPos pos, BlockState blockState) {
         super(pos, blockState);
         this.setItems(NonNullList.withSize(1, ItemStack.EMPTY));
+    }
+
+    @Override
+    protected EnumProperty<Direction> getFacingProperty() {
+        return DuctBlock.FACING;
     }
 
     @Override
@@ -45,6 +53,21 @@ public class DuctBlockEntity extends NonHopperBlockEntity implements TickingBloc
     @Override
     public void serverTick() {
         pushItemsTick(this.getLevel(), this.getBlockPos(), this.getBlockState(), this);
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        return SLOTS;
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack itemStack, @Nullable Direction direction) {
+        return this.facing != direction;
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+        return true;
     }
 
     public static void pushItemsTick(Level level, BlockPos pos, BlockState state, HopperBlockEntity blockEntity) {
@@ -88,8 +111,7 @@ public class DuctBlockEntity extends NonHopperBlockEntity implements TickingBloc
                         ItemStack itemStack2 = addItem(sourceContainer,
                                 container,
                                 sourceContainer.removeItem(i, 1),
-                                direction
-                        );
+                                direction);
                         if (itemStack2.isEmpty()) {
                             container.setChanged();
                             return true;
