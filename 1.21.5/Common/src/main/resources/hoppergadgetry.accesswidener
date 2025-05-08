@@ -10,3 +10,5 @@ accessible  method  net/minecraft/world/level/block/entity/HopperBlockEntity    
 accessible  method  net/minecraft/world/level/block/entity/HopperBlockEntity    isFullContainer (Lnet/minecraft/world/Container;Lnet/minecraft/core/Direction;)Z
 accessible  field   net/minecraft/world/level/block/entity/BlockEntity  blockState  Lnet/minecraft/world/level/block/state/BlockState;
 accessible  field   net/minecraft/world/level/block/entity/HopperBlockEntity    facing  Lnet/minecraft/core/Direction;
+accessible	field	net/minecraft/world/level/block/entity/BlockEntity	type	Lnet/minecraft/world/level/block/entity/BlockEntityType;
+mutable	field	net/minecraft/world/level/block/entity/BlockEntity	type	Lnet/minecraft/world/level/block/entity/BlockEntityType;
