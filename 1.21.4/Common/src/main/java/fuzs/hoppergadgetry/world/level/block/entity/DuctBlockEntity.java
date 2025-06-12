@@ -25,6 +25,7 @@ public class DuctBlockEntity extends NonHopperBlockEntity implements TickingBloc
 
     public DuctBlockEntity(BlockPos pos, BlockState blockState) {
         super(pos, blockState);
+        this.type = ModRegistry.DUCT_BLOCK_ENTITY_TYPE.value();
         this.setItems(NonNullList.withSize(1, ItemStack.EMPTY));
     }
 

@@ -15,6 +15,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HopperBlock;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -33,6 +34,12 @@ public class DuctBlockEntity extends NonHopperBlockEntity implements WorldlyCont
     @Override
     protected EnumProperty<Direction> getFacingProperty() {
         return DuctBlock.FACING;
+    }
+
+    @Override
+    public BlockEntityType<?> getType() {
+        // keep both; this and setting the field
+        return ModRegistry.DUCT_BLOCK_ENTITY_TYPE.value();
     }
 
     @Override
