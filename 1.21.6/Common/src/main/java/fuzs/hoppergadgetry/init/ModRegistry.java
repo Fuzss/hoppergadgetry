@@ -88,9 +88,9 @@ public class ModRegistry {
             DUCT_BLOCK);
     public static final Holder.Reference<MenuType<GratedHopperMenu>> GRATED_HOPPER_MENU_TYPE = REGISTRIES.registerMenuType(
             "grated_hopper",
-            () -> GratedHopperMenu::new);
+            GratedHopperMenu::new);
     public static final Holder.Reference<MenuType<DuctMenu>> DUCT_MENU_TYPE = REGISTRIES.registerMenuType("duct",
-            () -> DuctMenu::new);
+            DuctMenu::new);
 
     static final TagFactory TAGS = TagFactory.make(HopperGadgetry.MOD_ID);
     public static final TagKey<Block> DUCT_INPUTS_BLOCK_TAG = TAGS.registerBlockTag("duct_inputs");

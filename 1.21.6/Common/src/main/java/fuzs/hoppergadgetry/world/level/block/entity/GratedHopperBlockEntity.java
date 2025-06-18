@@ -2,17 +2,16 @@ package fuzs.hoppergadgetry.world.level.block.entity;
 
 import fuzs.hoppergadgetry.HopperGadgetry;
 import fuzs.hoppergadgetry.init.ModRegistry;
+import fuzs.hoppergadgetry.util.ContainerSerializationHelper;
 import fuzs.hoppergadgetry.world.inventory.GratedHopperMenu;
 import fuzs.puzzleslib.api.block.v1.entity.TickingBlockEntity;
 import fuzs.puzzleslib.api.container.v1.ContainerMenuHelper;
-import fuzs.puzzleslib.api.container.v1.ContainerSerializationHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
+import net.minecraft.world.ItemStackWithSlot;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -23,12 +22,15 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.Hopper;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class GratedHopperBlockEntity extends HopperBlockEntity implements TickingBlockEntity {
     public static final Component COMPONENT_GRATED_HOPPER = Component.translatable("container.grated_hopper");
     public static final String TAG_FILTER = HopperGadgetry.id("filter").toString();
 
-    private final NonNullList<ItemStack> filterItems = NonNullList.withSize(GratedHopperMenu.FILTER_CONTAINER_SIZE, ItemStack.EMPTY);
+    private final NonNullList<ItemStack> filterItems = NonNullList.withSize(GratedHopperMenu.FILTER_CONTAINER_SIZE,
+            ItemStack.EMPTY);
 
     public GratedHopperBlockEntity(BlockPos pos, BlockState blockState) {
         super(pos, blockState);
@@ -40,16 +42,17 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        this.filterItems.clear();
-        ContainerSerializationHelper.loadAllItems(TAG_FILTER, tag, this.filterItems, registries);
+    protected void loadAdditional(ValueInput valueInput) {
+        super.loadAdditional(valueInput);
+        ContainerSerializationHelper.fromSlots(this.filterItems,
+                valueInput.listOrEmpty(TAG_FILTER, ItemStackWithSlot.CODEC));
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        ContainerSerializationHelper.saveAllItems(TAG_FILTER, tag, this.filterItems, registries);
+    protected void saveAdditional(ValueOutput valueOutput) {
+        super.saveAdditional(valueOutput);
+        ContainerSerializationHelper.storeAsSlots(this.filterItems,
+                valueOutput.list(TAG_FILTER, ItemStackWithSlot.CODEC));
     }
 
     @Override
@@ -127,7 +130,9 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
 
     public static void entityInside(Level level, BlockPos blockPos, BlockState blockState, Entity entity, HopperBlockEntity blockEntity) {
         if (entity instanceof ItemEntity itemEntity) {
-            if (!itemEntity.getItem().isEmpty() && entity.getBoundingBox().move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ()).intersects(blockEntity.getSuckAabb())) {
+            if (!itemEntity.getItem().isEmpty() && entity.getBoundingBox()
+                    .move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ())
+                    .intersects(blockEntity.getSuckAabb())) {
                 tryMoveItems(level, blockPos, blockState, blockEntity, () -> {
                     ItemStack itemStack = itemEntity.getItem();
                     return blockEntity.canPlaceItem(0, itemStack) && addItem(blockEntity, itemEntity);

@@ -6,7 +6,6 @@ import fuzs.puzzleslib.api.block.v1.entity.TickingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
@@ -20,6 +19,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.Hopper;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
 public class ChuteBlockEntity extends HopperBlockEntity implements TickingBlockEntity {
@@ -66,7 +67,9 @@ public class ChuteBlockEntity extends HopperBlockEntity implements TickingBlockE
         --blockEntity.cooldownTime;
         blockEntity.tickedGameTime = level.getGameTime();
         if (!blockEntity.isOnCooldown()) {
-            Container container = getAttachedContainerWithSpace(level, blockPos, blockState.getValue(ChuteBlock.FACING));
+            Container container = getAttachedContainerWithSpace(level,
+                    blockPos,
+                    blockState.getValue(ChuteBlock.FACING));
             if (suckInItems(level, blockEntity, container)) {
                 blockEntity.setCooldown(8);
                 blockEntity.setChanged();
@@ -106,12 +109,12 @@ public class ChuteBlockEntity extends HopperBlockEntity implements TickingBlockE
     }
 
     @Override
-    public boolean tryLoadLootTable(CompoundTag tag) {
+    public boolean tryLoadLootTable(ValueInput valueInput) {
         return true;
     }
 
     @Override
-    public boolean trySaveLootTable(CompoundTag tag) {
+    public boolean trySaveLootTable(ValueOutput valueOutput) {
         return true;
     }
 
@@ -122,8 +125,12 @@ public class ChuteBlockEntity extends HopperBlockEntity implements TickingBlockE
 
     public static void entityInside(Level level, BlockPos blockPos, BlockState blockState, Entity entity, HopperBlockEntity blockEntity) {
         if (entity instanceof ItemEntity itemEntity && !itemEntity.getItem().isEmpty()) {
-            Container container = getAttachedContainerWithSpace(level, blockPos, blockState.getValue(ChuteBlock.FACING));
-            if (container != null && entity.getBoundingBox().move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ()).intersects(blockEntity.getSuckAabb())) {
+            Container container = getAttachedContainerWithSpace(level,
+                    blockPos,
+                    blockState.getValue(ChuteBlock.FACING));
+            if (container != null && entity.getBoundingBox()
+                    .move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ())
+                    .intersects(blockEntity.getSuckAabb())) {
                 addItem(container, itemEntity);
             }
         }

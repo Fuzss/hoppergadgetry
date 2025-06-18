@@ -4,7 +4,7 @@ import fuzs.hoppergadgetry.HopperGadgetry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -40,7 +40,7 @@ public class HopperLikeScreen<T extends AbstractContainerMenu> extends AbstractC
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-        guiGraphics.blit(RenderType::guiTextured,
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
                 this.resourceLocation,
                 this.leftPos,
                 this.topPos,

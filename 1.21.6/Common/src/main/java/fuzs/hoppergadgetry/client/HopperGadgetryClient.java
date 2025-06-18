@@ -11,7 +11,7 @@ import fuzs.puzzleslib.api.client.core.v1.context.RenderTypesContext;
 import fuzs.puzzleslib.api.client.init.v1.ModelLayerFactory;
 import net.minecraft.client.model.MinecartModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MinecartRenderer;
@@ -55,6 +55,6 @@ public class HopperGadgetryClient implements ClientModConstructor {
 
     @Override
     public void onRegisterBlockRenderTypes(RenderTypesContext<Block> context) {
-        context.registerRenderType(RenderType.cutout(), ModRegistry.GRATED_HOPPER_BLOCK.value());
+        context.registerChunkRenderType(ModRegistry.GRATED_HOPPER_BLOCK.value(), ChunkSectionLayer.CUTOUT);
     }
 }

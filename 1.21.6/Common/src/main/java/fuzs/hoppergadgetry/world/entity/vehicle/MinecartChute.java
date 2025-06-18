@@ -4,9 +4,7 @@ import fuzs.hoppergadgetry.init.ModRegistry;
 import fuzs.hoppergadgetry.world.level.block.entity.ChuteBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntitySelector;
@@ -21,6 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class MinecartChute extends MinecartHopper {
 
@@ -49,12 +49,12 @@ public class MinecartChute extends MinecartHopper {
     }
 
     @Override
-    public void addChestVehicleSaveData(CompoundTag tag, HolderLookup.Provider levelRegistry) {
+    public void addChestVehicleSaveData(ValueOutput valueOutput) {
         // NO-OP
     }
 
     @Override
-    public void readChestVehicleSaveData(CompoundTag tag, HolderLookup.Provider levelRegistry) {
+    public void readChestVehicleSaveData(ValueInput valueInput) {
         // NO-OP
     }
 
