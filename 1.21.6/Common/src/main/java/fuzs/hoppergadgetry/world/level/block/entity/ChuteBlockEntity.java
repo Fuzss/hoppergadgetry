@@ -26,8 +26,8 @@ import org.jetbrains.annotations.Nullable;
 public class ChuteBlockEntity extends HopperBlockEntity implements TickingBlockEntity {
     public static final Component COMPONENT_CHUTE = Component.translatable("container.chute");
 
-    public ChuteBlockEntity(BlockPos pos, BlockState blockState) {
-        super(pos, blockState);
+    public ChuteBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(blockPos, blockState);
         super.setItems(NonNullList.create());
     }
 

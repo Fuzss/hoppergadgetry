@@ -32,8 +32,8 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
     private final NonNullList<ItemStack> filterItems = NonNullList.withSize(GratedHopperMenu.FILTER_CONTAINER_SIZE,
             ItemStack.EMPTY);
 
-    public GratedHopperBlockEntity(BlockPos pos, BlockState blockState) {
-        super(pos, blockState);
+    public GratedHopperBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(blockPos, blockState);
     }
 
     @Override
