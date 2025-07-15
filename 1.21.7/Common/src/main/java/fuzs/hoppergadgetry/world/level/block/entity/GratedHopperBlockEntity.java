@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
+import net.minecraft.world.Containers;
 import net.minecraft.world.ItemStackWithSlot;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -79,6 +80,14 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
         }
 
         return isEmpty;
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (this.hasLevel()) {
+            Containers.dropContents(this.getLevel(), pos, this.filterItems);
+        }
     }
 
     @Override

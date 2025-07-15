@@ -13,6 +13,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
+import net.minecraft.world.Containers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -28,7 +29,8 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
     public static final Component COMPONENT_GRATED_HOPPER = Component.translatable("container.grated_hopper");
     public static final String TAG_FILTER = HopperGadgetry.id("filter").toString();
 
-    private final NonNullList<ItemStack> filterItems = NonNullList.withSize(GratedHopperMenu.FILTER_CONTAINER_SIZE, ItemStack.EMPTY);
+    private final NonNullList<ItemStack> filterItems = NonNullList.withSize(GratedHopperMenu.FILTER_CONTAINER_SIZE,
+            ItemStack.EMPTY);
 
     public GratedHopperBlockEntity(BlockPos pos, BlockState blockState) {
         super(pos, blockState);
@@ -76,6 +78,14 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
         }
 
         return isEmpty;
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        if (this.hasLevel()) {
+            Containers.dropContents(this.getLevel(), pos, this.filterItems);
+        }
     }
 
     @Override
@@ -127,7 +137,9 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
 
     public static void entityInside(Level level, BlockPos blockPos, BlockState blockState, Entity entity, HopperBlockEntity blockEntity) {
         if (entity instanceof ItemEntity itemEntity) {
-            if (!itemEntity.getItem().isEmpty() && entity.getBoundingBox().move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ()).intersects(blockEntity.getSuckAabb())) {
+            if (!itemEntity.getItem().isEmpty() && entity.getBoundingBox()
+                    .move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ())
+                    .intersects(blockEntity.getSuckAabb())) {
                 tryMoveItems(level, blockPos, blockState, blockEntity, () -> {
                     ItemStack itemStack = itemEntity.getItem();
                     return blockEntity.canPlaceItem(0, itemStack) && addItem(blockEntity, itemEntity);
