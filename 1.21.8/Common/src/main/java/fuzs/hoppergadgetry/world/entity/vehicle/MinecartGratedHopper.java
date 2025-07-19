@@ -1,10 +1,10 @@
 package fuzs.hoppergadgetry.world.entity.vehicle;
 
 import fuzs.hoppergadgetry.init.ModRegistry;
-import fuzs.hoppergadgetry.util.ContainerSerializationHelper;
 import fuzs.hoppergadgetry.world.inventory.GratedHopperMenu;
 import fuzs.hoppergadgetry.world.level.block.entity.GratedHopperBlockEntity;
 import fuzs.puzzleslib.api.container.v1.ContainerMenuHelper;
+import fuzs.puzzleslib.api.container.v1.ContainerSerializationHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.ItemStackWithSlot;
 import net.minecraft.world.entity.EntitySelector;
@@ -54,9 +54,8 @@ public class MinecartGratedHopper extends MinecartHopper {
     }
 
     @Override
-    public boolean canPlaceItem(int slot, ItemStack stack) {
-        return this.filterItems.getFirst().isEmpty() || ItemStack.isSameItemSameComponents(this.filterItems.getFirst(),
-                stack);
+    public boolean canPlaceItem(int slot, ItemStack itemStack) {
+        return GratedHopperBlockEntity.canPlaceItem(itemStack, this.filterItems);
     }
 
     @Override

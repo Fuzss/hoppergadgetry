@@ -2,10 +2,10 @@ package fuzs.hoppergadgetry.world.level.block.entity;
 
 import fuzs.hoppergadgetry.HopperGadgetry;
 import fuzs.hoppergadgetry.init.ModRegistry;
-import fuzs.hoppergadgetry.util.ContainerSerializationHelper;
 import fuzs.hoppergadgetry.world.inventory.GratedHopperMenu;
 import fuzs.puzzleslib.api.block.v1.entity.TickingBlockEntity;
 import fuzs.puzzleslib.api.container.v1.ContainerMenuHelper;
+import fuzs.puzzleslib.api.container.v1.ContainerSerializationHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -67,11 +67,15 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
     }
 
     @Override
-    public boolean canPlaceItem(int slot, ItemStack stack) {
+    public boolean canPlaceItem(int slot, ItemStack itemStack) {
+        return canPlaceItem(itemStack, this.filterItems);
+    }
+
+    public static boolean canPlaceItem(ItemStack itemStack, NonNullList<ItemStack> filterItems) {
         boolean isEmpty = true;
-        for (ItemStack filter : this.filterItems) {
-            if (!filter.isEmpty()) {
-                if (ItemStack.isSameItemSameComponents(filter, stack)) {
+        for (ItemStack filterItemStack : filterItems) {
+            if (!filterItemStack.isEmpty()) {
+                if (ItemStack.isSameItem(itemStack, filterItemStack)) {
                     return true;
                 } else {
                     isEmpty = false;

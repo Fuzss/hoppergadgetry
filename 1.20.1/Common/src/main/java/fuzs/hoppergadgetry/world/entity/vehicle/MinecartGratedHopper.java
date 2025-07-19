@@ -66,8 +66,8 @@ public class MinecartGratedHopper extends MinecartHopper {
     }
 
     @Override
-    public boolean canPlaceItem(int slot, ItemStack stack) {
-        return this.filterItems.get(0).isEmpty() || ItemStack.isSameItemSameTags(this.filterItems.get(0), stack);
+    public boolean canPlaceItem(int slot, ItemStack itemStack) {
+        return GratedHopperBlockEntity.canPlaceItem(itemStack, this.filterItems);
     }
 
     @Override

@@ -66,11 +66,15 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
     }
 
     @Override
-    public boolean canPlaceItem(int slot, ItemStack stack) {
+    public boolean canPlaceItem(int slot, ItemStack itemStack) {
+        return canPlaceItem(itemStack, this.filterItems);
+    }
+
+    public static boolean canPlaceItem(ItemStack itemStack, NonNullList<ItemStack> filterItems) {
         boolean isEmpty = true;
-        for (ItemStack filter : this.filterItems) {
-            if (!filter.isEmpty()) {
-                if (ItemStack.isSameItemSameTags(filter, stack)) {
+        for (ItemStack filterItemStack : filterItems) {
+            if (!filterItemStack.isEmpty()) {
+                if (ItemStack.isSameItem(itemStack, filterItemStack)) {
                     return true;
                 } else {
                     isEmpty = false;
