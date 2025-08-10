@@ -28,10 +28,11 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
     public static final Component COMPONENT_GRATED_HOPPER = Component.translatable("container.grated_hopper");
     public static final String TAG_FILTER = HopperGadgetry.id("filter").toString();
 
-    private final NonNullList<ItemStack> filterItems = NonNullList.withSize(GratedHopperMenu.FILTER_CONTAINER_SIZE, ItemStack.EMPTY);
+    private final NonNullList<ItemStack> filterItems = NonNullList.withSize(GratedHopperMenu.FILTER_CONTAINER_SIZE,
+            ItemStack.EMPTY);
 
-    public GratedHopperBlockEntity(BlockPos pos, BlockState blockState) {
-        super(pos, blockState);
+    public GratedHopperBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(blockPos, blockState);
     }
 
     @Override
@@ -63,11 +64,15 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
     }
 
     @Override
-    public boolean canPlaceItem(int slot, ItemStack stack) {
+    public boolean canPlaceItem(int slot, ItemStack itemStack) {
+        return canPlaceItem(itemStack, this.filterItems);
+    }
+
+    public static boolean canPlaceItem(ItemStack itemStack, NonNullList<ItemStack> filterItems) {
         boolean isEmpty = true;
-        for (ItemStack filter : this.filterItems) {
-            if (!filter.isEmpty()) {
-                if (ItemStack.isSameItemSameComponents(filter, stack)) {
+        for (ItemStack filterItemStack : filterItems) {
+            if (!filterItemStack.isEmpty()) {
+                if (ItemStack.isSameItem(itemStack, filterItemStack)) {
                     return true;
                 } else {
                     isEmpty = false;
@@ -127,7 +132,9 @@ public class GratedHopperBlockEntity extends HopperBlockEntity implements Tickin
 
     public static void entityInside(Level level, BlockPos blockPos, BlockState blockState, Entity entity, HopperBlockEntity blockEntity) {
         if (entity instanceof ItemEntity itemEntity) {
-            if (!itemEntity.getItem().isEmpty() && entity.getBoundingBox().move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ()).intersects(blockEntity.getSuckAabb())) {
+            if (!itemEntity.getItem().isEmpty() && entity.getBoundingBox()
+                    .move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ())
+                    .intersects(blockEntity.getSuckAabb())) {
                 tryMoveItems(level, blockPos, blockState, blockEntity, () -> {
                     ItemStack itemStack = itemEntity.getItem();
                     return blockEntity.canPlaceItem(0, itemStack) && addItem(blockEntity, itemEntity);
