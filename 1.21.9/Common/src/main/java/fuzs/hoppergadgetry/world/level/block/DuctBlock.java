@@ -78,7 +78,7 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    public RenderShape getRenderShape(BlockState blockState) {
         return RenderShape.MODEL;
     }
 
@@ -88,33 +88,33 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     }
 
     @Override
-    public boolean isPathfindable(BlockState state, PathComputationType type) {
+    public boolean isPathfindable(BlockState blockState, PathComputationType type) {
         return false;
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
-        state = super.updateShape(state,
+    protected BlockState updateShape(BlockState blockState, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos blockPos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        blockState = super.updateShape(blockState,
                 level,
                 scheduledTickAccess,
-                pos,
+                blockPos,
                 direction,
                 neighborPos,
                 neighborState,
                 random);
-        return state.setValue(PROPERTY_BY_DIRECTION.get(direction),
+        return blockState.setValue(PROPERTY_BY_DIRECTION.get(direction),
                 this.canConnect(neighborState, direction.getOpposite()));
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
-        this.checkPoweredState(level, pos, state);
+    protected void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+        this.checkPoweredState(level, blockPos, blockState);
     }
 
     @Override
-    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        if (!oldState.is(state.getBlock())) {
-            this.checkPoweredState(level, pos, state);
+    public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState oldState, boolean movedByPiston) {
+        if (!oldState.is(blockState.getBlock())) {
+            this.checkPoweredState(level, blockPos, blockState);
         }
     }
 
@@ -124,11 +124,11 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.isClientSide) {
+    protected InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult hitResult) {
+        if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         } else {
-            if (level.getBlockEntity(pos) instanceof HopperBlockEntity blockEntity) {
+            if (level.getBlockEntity(blockPos) instanceof HopperBlockEntity blockEntity) {
                 player.openMenu(blockEntity);
             }
 
@@ -137,29 +137,29 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
     }
 
     @Override
-    public boolean hasAnalogOutputSignal(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState blockState) {
         return true;
     }
 
     @Override
-    public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    public BlockState rotate(BlockState blockState, Rotation rotation) {
+        return blockState.setValue(FACING, rotation.rotate(blockState.getValue(FACING)));
     }
 
     @Override
-    public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(FACING)));
+    public BlockState mirror(BlockState blockState, Mirror mirror) {
+        return blockState.rotate(mirror.getRotation(blockState.getValue(FACING)));
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
-        return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
+    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos blockPos, Direction direction) {
+        return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(blockPos));
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        VoxelShape voxelShape = SHAPES[this.getAABBIndex(state)];
-        return voxelShape != null ? voxelShape : super.getShape(state, level, pos, context);
+    public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos blockPos, CollisionContext context) {
+        VoxelShape voxelShape = SHAPES[this.getAABBIndex(blockState)];
+        return voxelShape != null ? voxelShape : super.getShape(blockState, level, blockPos, context);
     }
 
     protected int getAABBIndex(BlockState blockState) {
@@ -176,10 +176,10 @@ public class DuctBlock extends BaseEntityBlock implements TickingEntityBlock<Duc
         return index;
     }
 
-    private void checkPoweredState(Level level, BlockPos pos, BlockState state) {
-        boolean bl = !level.hasNeighborSignal(pos);
-        if (bl != state.getValue(ENABLED)) {
-            level.setBlock(pos, state.setValue(ENABLED, bl), 2);
+    private void checkPoweredState(Level level, BlockPos blockPos, BlockState blockState) {
+        boolean bl = !level.hasNeighborSignal(blockPos);
+        if (bl != blockState.getValue(ENABLED)) {
+            level.setBlock(blockPos, blockState.setValue(ENABLED, bl), 2);
         }
     }
 

@@ -1,8 +1,8 @@
 {
   "values": [
-    "minecraft:hopper",
+    "hoppergadgetry:chute",
     "hoppergadgetry:duct",
     "hoppergadgetry:grated_hopper",
-    "hoppergadgetry:chute"
+    "minecraft:hopper"
   ]
 }
