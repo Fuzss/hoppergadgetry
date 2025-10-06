@@ -1,0 +1,7 @@
+{
+  "parent": "hoppergadgetry:block/template_duct_input",
+  "textures": {
+    "particle": "hoppergadgetry:block/duct_input",
+    "texture": "hoppergadgetry:block/duct_input"
+  }
+}
