@@ -63,7 +63,7 @@ public class ChuteBlock extends BaseEntityBlock implements TickingEntityBlock<Ch
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier, boolean intersectsPosition) {
         if (level.getBlockEntity(pos) instanceof ChuteBlockEntity blockEntity) {
             ChuteBlockEntity.entityInside(level, pos, state, entity, blockEntity);
         }
