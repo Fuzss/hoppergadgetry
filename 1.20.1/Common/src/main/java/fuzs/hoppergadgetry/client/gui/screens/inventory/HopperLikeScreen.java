@@ -10,7 +10,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 
 public class HopperLikeScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
-    public static final ResourceLocation GRATED_HOPPER_LOCATION = HopperGadgetry.id("textures/gui/container/grated_hopper.png");
+    public static final ResourceLocation GRATED_HOPPER_LOCATION = HopperGadgetry.id(
+            "textures/gui/container/grated_hopper.png");
     public static final ResourceLocation DUCT_LOCATION = HopperGadgetry.id("textures/gui/container/duct.png");
     public static final int GRATED_HOPPER_IMAGE_HEIGHT = 164;
     public static final int DUCT_IMAGE_HEIGHT = 133;
@@ -32,6 +33,7 @@ public class HopperLikeScreen<T extends AbstractContainerMenu> extends AbstractC
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        this.renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }

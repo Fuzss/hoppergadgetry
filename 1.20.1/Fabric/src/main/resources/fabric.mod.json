@@ -42,5 +42,11 @@
     "extensibleenums": "*",
     "minecraft": "${minecraftVersion}",
     "java": ">=17"
+  },
+
+  "custom": {
+    "lithium:options": {
+      "mixin.block.hopper": false
+    }
   }
 }
