@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class ChuteBlockEntity extends HopperBlockEntity implements TickingBlockEntity {
     public static final Component COMPONENT_CHUTE = Component.translatable("container.chute");

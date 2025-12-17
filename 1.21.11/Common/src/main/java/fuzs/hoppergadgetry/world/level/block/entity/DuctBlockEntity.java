@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.HopperBlock;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class DuctBlockEntity extends NonHopperBlockEntity implements WorldlyContainer, TickingBlockEntity {
     public static final Component COMPONENT_DUCT = Component.translatable("container.duct");

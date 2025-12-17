@@ -1,7 +1,6 @@
 package fuzs.hoppergadgetry.world.inventory;
 
 import fuzs.hoppergadgetry.init.ModRegistry;
-import fuzs.puzzleslib.api.container.v1.ContainerMenuHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,7 +16,10 @@ public class GratedHopperMenu extends AbstractContainerMenu {
     private final Container hopper;
 
     public GratedHopperMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, new SimpleContainer(CONTAINER_SIZE), new SimpleContainer(FILTER_CONTAINER_SIZE));
+        this(containerId,
+                playerInventory,
+                new SimpleContainer(CONTAINER_SIZE),
+                new SimpleContainer(FILTER_CONTAINER_SIZE));
     }
 
     public GratedHopperMenu(int containerId, Inventory inventory, Container container, Container filterContainer) {
@@ -27,7 +29,7 @@ public class GratedHopperMenu extends AbstractContainerMenu {
         checkContainerSize(filterContainer, FILTER_CONTAINER_SIZE);
         container.startOpen(inventory.player);
         this.addContainerSlots(container, filterContainer);
-        ContainerMenuHelper.addInventorySlots(this, inventory, 51 + 31);
+        this.addStandardInventorySlots(inventory, 8, 51 + 31);
     }
 
     private void addContainerSlots(Container container, Container filterContainer) {
@@ -52,11 +54,17 @@ public class GratedHopperMenu extends AbstractContainerMenu {
             ItemStack itemStack2 = slot.getItem();
             itemStack = itemStack2.copy();
             if (index < CONTAINER_SIZE) {
-                if (!this.moveItemStackTo(itemStack2, CONTAINER_SIZE + FILTER_CONTAINER_SIZE, this.slots.size(), true)) {
+                if (!this.moveItemStackTo(itemStack2,
+                        CONTAINER_SIZE + FILTER_CONTAINER_SIZE,
+                        this.slots.size(),
+                        true)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index < CONTAINER_SIZE + FILTER_CONTAINER_SIZE) {
-                if (!this.moveItemStackTo(itemStack2, CONTAINER_SIZE + FILTER_CONTAINER_SIZE, this.slots.size(), true)) {
+                if (!this.moveItemStackTo(itemStack2,
+                        CONTAINER_SIZE + FILTER_CONTAINER_SIZE,
+                        this.slots.size(),
+                        true)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(itemStack2, 0, CONTAINER_SIZE, false)) {

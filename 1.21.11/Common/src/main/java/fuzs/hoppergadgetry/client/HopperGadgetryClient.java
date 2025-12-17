@@ -9,13 +9,13 @@ import fuzs.puzzleslib.api.client.core.v1.context.LayerDefinitionsContext;
 import fuzs.puzzleslib.api.client.core.v1.context.MenuScreensContext;
 import fuzs.puzzleslib.api.client.core.v1.context.RenderTypesContext;
 import fuzs.puzzleslib.api.client.init.v1.ModelLayerFactory;
-import net.minecraft.client.model.MinecartModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.object.cart.MinecartModel;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MinecartRenderer;
-import net.minecraft.world.entity.vehicle.AbstractMinecart;
+import net.minecraft.world.entity.vehicle.minecart.AbstractMinecart;
 import net.minecraft.world.level.block.Block;
 
 public class HopperGadgetryClient implements ClientModConstructor {
@@ -33,7 +33,7 @@ public class HopperGadgetryClient implements ClientModConstructor {
     }
 
     @SuppressWarnings("unchecked")
-    static <T extends AbstractMinecart> EntityRendererProvider<T> getMinecartRendererProvider(ModelLayerLocation modelLayerLocation) {
+    private static <T extends AbstractMinecart> EntityRendererProvider<T> getMinecartRendererProvider(ModelLayerLocation modelLayerLocation) {
         return (EntityRendererProvider.Context context) -> (EntityRenderer<T, ?>) new MinecartRenderer(context,
                 modelLayerLocation);
     }

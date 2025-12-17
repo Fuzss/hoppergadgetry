@@ -16,7 +16,7 @@ import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -40,9 +40,9 @@ public class ModModelProvider extends AbstractModelProvider {
     }
 
     public static TextureMapping createParticleTextureMapping(Block block, String suffix) {
-        ResourceLocation resourceLocation = TextureMapping.getBlockTexture(block, suffix);
-        return new TextureMapping().put(TextureSlot.TEXTURE, resourceLocation)
-                .put(TextureSlot.PARTICLE, resourceLocation);
+        Identifier identifier = TextureMapping.getBlockTexture(block, suffix);
+        return new TextureMapping().put(TextureSlot.TEXTURE, identifier)
+                .put(TextureSlot.PARTICLE, identifier);
     }
 
     @Override
@@ -124,11 +124,11 @@ public class ModModelProvider extends AbstractModelProvider {
     }
 
     public final void createChute(Block block, BlockModelGenerators blockModelGenerators) {
-        ResourceLocation resourceLocation = CHUTE_TEMPLATE.create(block,
+        Identifier identifier = CHUTE_TEMPLATE.create(block,
                 TextureMapping.logColumn(Blocks.STRIPPED_OAK_LOG),
                 blockModelGenerators.modelOutput);
         blockModelGenerators.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block,
-                BlockModelGenerators.plainVariant(resourceLocation)));
+                BlockModelGenerators.plainVariant(identifier)));
     }
 
     public final void createGratedHopper(Block block, BlockModelGenerators blockModelGenerators) {
