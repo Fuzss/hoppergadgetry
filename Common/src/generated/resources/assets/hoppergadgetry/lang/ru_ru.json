@@ -1,0 +1,16 @@
+{
+  "block.hoppergadgetry.chute": "Жёлоб",
+  "block.hoppergadgetry.duct": "Труба",
+  "block.hoppergadgetry.grated_hopper": "Воронка с решёткой",
+  "container.chute": "Предметный жёлоб",
+  "container.duct": "Предметная труба",
+  "container.grated_hopper": "Воронка с решёткой",
+  "entity.hoppergadgetry.chute_minecart": "Вагонетка с жёлобом",
+  "entity.hoppergadgetry.grated_hopper_minecart": "Фильтрующая вагонетка",
+  "item.hoppergadgetry.chute_minecart": "Вагонетка с жёлобом",
+  "item.hoppergadgetry.grated_hopper_minecart": "Фильтрующая вагонетка",
+  "itemGroup.hoppergadgetry.main": "Hopper Gadgetry",
+  
+  "modmenu.summaryTranslation.hoppergadgetry": "Готовы создавать что-то более умное и недорогое? Новые воронки уже готовы пополнить ваш ассортимент.",
+  "modmenu.descriptionTranslation.hoppergadgetry": "Готовы создавать что-то более умное и недорогое? Новые воронки уже готовы пополнить ваш ассортимент."
+}
